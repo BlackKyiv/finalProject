@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+         version="4.0">
+
+    <!-- Welcome files -->
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Servlets  -->
+    <servlet>
+        <servlet-name>MainServlet</servlet-name>
+        <servlet-class>ua.training.myWeb.Servlet</servlet-class>
+    </servlet>
+
+    <!-- ServletMapping  -->
+    <servlet-mapping>
+        <servlet-name>MainServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- Filters  -->
+    <filter>
+        <filter-name>Encoding</filter-name>
+        <filter-class>ua.training.myWeb.filters.EncodingFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>Auth</filter-name>
+        <filter-class>ua.training.myWeb.filters.AuthFilter</filter-class>
+
+        <init-param>
+        <param-name>user</param-name>
+            <param-value>subscribe profile replenishAccount</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>admin</param-name>
+            <param-value>blockUser addEdition updateEdition</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>common</param-name>
+            <param-value>logout</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>guest</param-name>
+            <param-value>login register</param-value>
+        </init-param>
+
+    </filter>
+
+    <!-- Filters  mapping-->
+    <filter-mapping>
+        <filter-name>Encoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>Auth</filter-name>
+        <servlet-name>MainServlet</servlet-name>
+    </filter-mapping>
+
+
+
+</web-app>

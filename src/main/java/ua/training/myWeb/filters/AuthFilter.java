@@ -1,7 +1,7 @@
 package ua.training.myWeb.filters;
 
 
-import ua.training.myWeb.model.entity.Role;
+import ua.training.myWeb.model.entity.enums.Role;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

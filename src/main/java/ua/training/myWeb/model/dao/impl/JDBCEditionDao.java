@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.util.List;
 
 public class JDBCEditionDao implements EditionDao {
-    private Connection connection;
+    private final Connection connection;
 
     public JDBCEditionDao(Connection connection) {
         this.connection = connection;
@@ -22,7 +22,6 @@ public class JDBCEditionDao implements EditionDao {
     public Edition findById(long id) {
         return null;
     }
-
 
     @Override
     public List<Edition> findAll() {
@@ -41,6 +40,7 @@ public class JDBCEditionDao implements EditionDao {
 
     @Override
     public void close() throws Exception {
-
+        connection.commit();
+        connection.close();
     }
 }

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class DBManager {
 
-    public static final String URL = "jdbc\\:h2\\:~/test;user\\=root;password\\=root";
+    public static final String URL = "jdbc\\:mysql\\:~/test;user\\=root;password\\=root";
     private static DBManager dbManager;
 
     public static DBManager getInstance() {
@@ -17,7 +17,7 @@ public class DBManager {
     }
 
 
-    public Connection getConnection(){
+    public Connection getConnection() {
         try {
             return DriverManager.getConnection(URL);
         } catch (SQLException throwables) {
@@ -25,11 +25,6 @@ public class DBManager {
         }
         return null;
     }
-
-    public Connection getConnection(String connectionUrl) throws SQLException {
-        return DriverManager.getConnection(connectionUrl);
-    }
-
 
 
 }

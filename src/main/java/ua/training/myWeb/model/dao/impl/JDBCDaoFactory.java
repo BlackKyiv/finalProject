@@ -2,9 +2,7 @@ package ua.training.myWeb.model.dao.impl;
 
 
 import ua.training.myWeb.model.DBManager;
-import ua.training.myWeb.model.dao.DaoFactory;
-import ua.training.myWeb.model.dao.EditionDao;
-import ua.training.myWeb.model.dao.UserDao;
+import ua.training.myWeb.model.dao.*;
 
 public class JDBCDaoFactory extends DaoFactory {
 
@@ -16,6 +14,16 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public EditionDao createEditionDao() {
         return new JDBCEditionDao(DBManager.getInstance().getConnection());
+    }
+
+    @Override
+    public SubscriptionDao createSubscriptionDao() {
+        return new JDBCSubscriptionDao(DBManager.getInstance().getConnection());
+    }
+
+    @Override
+    public ThemeDao createThemeDao() {
+        return new JDBCThemeDao(DBManager.getInstance().getConnection());
     }
 
 

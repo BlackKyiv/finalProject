@@ -3,9 +3,16 @@ package ua.training.myWeb.model.dao.impl;
 import ua.training.myWeb.model.dao.ThemeDao;
 import ua.training.myWeb.model.entity.Theme;
 
+import java.sql.Connection;
 import java.util.List;
 
-public class JDBSThemeDao implements ThemeDao {
+public class JDBCThemeDao implements ThemeDao {
+    private final Connection connection;
+
+    public JDBCThemeDao(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public void create(Theme entity) {
 
@@ -33,6 +40,7 @@ public class JDBSThemeDao implements ThemeDao {
 
     @Override
     public void close() throws Exception {
-
+        connection.commit();
+        connection.close();
     }
 }

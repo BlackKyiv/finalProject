@@ -3,7 +3,17 @@ package ua.training.myWeb.model.entity.enums;
 import java.util.Locale;
 
 public enum EditionStatus {
-    ACTIVE, HIDDEN, DELETED;
+    ACTIVE(1), HIDDEN(2), DELETED(3);
+
+
+    private final int value;
+    EditionStatus(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
 
     public static EditionStatus getEditionStatus(String text) {
         switch (text.toLowerCase()) {

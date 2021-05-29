@@ -3,7 +3,8 @@ package ua.training.myWeb.model.entity;
 
 import ua.training.myWeb.model.entity.enums.SubscriptionStatus;
 
-import java.util.Date;
+import java.sql.Date;
+
 
 public class Subscription extends Entity {
 

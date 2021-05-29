@@ -15,5 +15,13 @@ public abstract class Entity implements Serializable {
         this.id = id;
     }
 
+    public boolean equals(Object o) {
+        if (o != null && this.getClass() == o.getClass()) {
+            Entity e = (Entity) o;
+            if(id.equals(e.getId())) return true;
+        }
+        return false;
+    }
+
 
 }

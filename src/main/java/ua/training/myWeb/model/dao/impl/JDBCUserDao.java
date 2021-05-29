@@ -4,32 +4,39 @@ import ua.training.myWeb.model.dao.UserDao;
 import ua.training.myWeb.model.dao.mappers.UserMapper;
 import ua.training.myWeb.model.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCUserDao implements UserDao {
-    private final Connection connection;
+    private Connection connection;
 
     public JDBCUserDao(Connection connection) {
-        this.connection = connection;
     }
 
     @Override
     public void create(User entity) {
-
+        try (PreparedStatement stmt = connection.prepareStatement(
+                MySQLCommands.INSERT_USER,
+                Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setString(1, entity.getLogin());
+            stmt.setString(2, entity.getPassword());
+            stmt.setDouble(3, entity.getAccount());
+            stmt.setInt(4, entity.getRole().getValue());
+            stmt.setInt(5, entity.getStatus().getValue());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public User findByLogin(String login) {
-        User user = new User();
+        User user = null;
         UserMapper userMapper = new UserMapper();
         try {
-            connection.setAutoCommit(false);
-            try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM user WHERE login = ? LIMIT 1")) {
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    MySQLCommands.FIND_USER_BY_LOGIN)) {
                 stmt.setString(1, login);
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) user = userMapper.extractFromResultSet(rs);
@@ -43,12 +50,12 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public User findById(long id) {
-        User user = new User();
+        User user = null;
         UserMapper userMapper = new UserMapper();
         try {
-            connection.setAutoCommit(false);
-            try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM user WHERE id = ? LIMIT 1")) {
-                stmt.setString(1, String.valueOf(id));
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    MySQLCommands.FIND_USER_BY_ID)) {
+                stmt.setLong(1, id);
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) user = userMapper.extractFromResultSet(rs);
                 }
@@ -64,9 +71,8 @@ public class JDBCUserDao implements UserDao {
         List<User> users = new ArrayList<>();
         UserMapper userMapper = new UserMapper();
         try {
-            connection.setAutoCommit(false);
-            try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM user")) {
-
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    MySQLCommands.FIND_ALL_USERS)) {
                 try (ResultSet rs = stmt.executeQuery()) {
                     while (rs.next()) users.add(userMapper.extractFromResultSet(rs));
                 }
@@ -79,12 +85,29 @@ public class JDBCUserDao implements UserDao {
 
     @Override
     public void update(User entity) {
-
+        try (PreparedStatement stmt = connection.prepareStatement(
+                MySQLCommands.UPDATE_USER)) {
+            stmt.setString(1, entity.getLogin());
+            stmt.setString(2, entity.getPassword());
+            stmt.setDouble(3, entity.getAccount());
+            stmt.setInt(4, entity.getRole().getValue());
+            stmt.setInt(5, entity.getStatus().getValue());
+            stmt.setLong(6, entity.getId());
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
     public void delete(long id) {
-
+        try (PreparedStatement stmt = connection.prepareStatement(
+                MySQLCommands.DELETE_USER)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override

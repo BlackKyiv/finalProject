@@ -4,7 +4,16 @@ import java.util.Locale;
 
 public enum SubscriptionStatus {
 
-    ACTIVE, PAUSED, CANCELED;
+    ACTIVE(1), PAUSED(2), CANCELED(3);
+
+    private final int value;
+    SubscriptionStatus(int value) {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
 
     public static SubscriptionStatus getSubscriptionStatus(String text) {
         switch (text.toLowerCase()) {

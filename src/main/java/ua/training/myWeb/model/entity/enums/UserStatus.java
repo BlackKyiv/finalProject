@@ -4,7 +4,7 @@ package ua.training.myWeb.model.entity.enums;
 import java.util.Locale;
 
 public enum UserStatus {
-    ACTIVE(1), BLOCKED(2), DELETED(3);
+    ACTIVE(1), BLOCKED(2), DELETED(3), UNKNOWN(4);
 
     private final int value;
     UserStatus(int value) {

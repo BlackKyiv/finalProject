@@ -30,5 +30,4 @@ public class JDBCDaoFactory extends DaoFactory {
         return new JDBCThemeDao(DBManager.getInstance().getConnection());
     }
 
-
 }

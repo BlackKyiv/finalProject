@@ -2,9 +2,7 @@ package ua.training.myWeb.model.dao.impl;
 
 import ua.training.myWeb.model.dao.ThemeDao;
 import ua.training.myWeb.model.dao.mappers.ThemeMapper;
-import ua.training.myWeb.model.dao.mappers.UserMapper;
 import ua.training.myWeb.model.entity.Theme;
-import ua.training.myWeb.model.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,6 +26,23 @@ public class JDBCThemeDao implements ThemeDao {
             ex.printStackTrace();
         }
     }
+
+    @Override
+    public Long count() {
+        Long result = null;
+        try {
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    MySQLCommands.THEME_COUNT)) {
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) result = rs.getLong("number");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
 
     @Override
     public Theme findById(long id) {
@@ -92,4 +107,6 @@ public class JDBCThemeDao implements ThemeDao {
         connection.commit();
         connection.close();
     }
+
+
 }

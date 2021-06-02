@@ -14,6 +14,7 @@ public class EditionMapper implements ObjectMapper<Edition> {
     @Override
     public Edition extractFromResultSet(ResultSet rs) throws SQLException {
         Edition edition = new Edition();
+        edition.setId(rs.getLong("id_edition"));
         edition.setName(rs.getString("name"));
         edition.setPrice(rs.getDouble("price"));
         edition.setTheme(new Theme(rs.getString("theme")));

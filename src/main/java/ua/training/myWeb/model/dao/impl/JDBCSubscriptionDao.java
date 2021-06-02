@@ -35,6 +35,22 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
     }
 
     @Override
+    public Long count() {
+        Long result = null;
+        try {
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    MySQLCommands.SUBSCRIPTIONS_COUNT)) {
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) result = rs.getLong("number");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
     public Subscription findById(long id) {
         Subscription subscription = null;
         SubscriptionMapper subscriptionMapper = new SubscriptionMapper();
@@ -87,7 +103,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
     @Override
     public void delete(long id) {
         try (PreparedStatement stmt = connection.prepareStatement(
-                MySQLCommands.DELETE_USER)) {
+                MySQLCommands.DELETE_SUBSCRIPTION)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException ex) {
@@ -99,5 +115,44 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
     public void close() throws Exception {
         connection.commit();
         connection.close();
+    }
+
+    @Override
+    public Subscription findByUserIdAndEditionId(Long userId, Long editionId) {
+        Subscription subscription = null;
+        SubscriptionMapper subscriptionMapper = new SubscriptionMapper();
+        try {
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    MySQLCommands.FIND_SUBSCRIPTION_BY_USER_ID_AND_EDITION_ID)) {
+                stmt.setLong(1, userId);
+                stmt.setLong(2, editionId);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) subscription = subscriptionMapper.extractFromResultSet(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return subscription;
+    }
+
+    @Override
+    public List<Subscription> findByUserIdOffsetAndLimit(Long userId, Long offset, Long limit) {
+        List<Subscription> subscriptions = new ArrayList<>();
+        SubscriptionMapper mapper = new SubscriptionMapper();
+        try {
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    MySQLCommands.FIND_SUBSCRIPTION_BY_USER_ID_OFFSET_LIMIT)) {
+                stmt.setLong(1, userId);
+                stmt.setLong(2, offset);
+                stmt.setLong(3, limit);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) subscriptions.add(mapper.extractFromResultSet(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return subscriptions;
     }
 }

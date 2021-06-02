@@ -1,54 +1,55 @@
 package ua.training.myWeb;
 
+import org.apache.log4j.Logger;
 import ua.training.myWeb.commands.Command;
-import ua.training.myWeb.commands.LoginCommand;
-import ua.training.myWeb.commands.LogoutCommand;
+import ua.training.myWeb.commands.CommandContainer;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
 
 public class Servlet extends HttpServlet {
-    HashMap<String, Command> commands = new HashMap<>();
 
+    private static final Logger log = Logger.getLogger(Servlet.class);
 
-    @Override
-    public void init(ServletConfig servletConfig){
-        servletConfig.getServletContext()
-                .setAttribute("loggedUsers", new HashSet<String>());
-
-        commands.put("login", new LoginCommand());
-        commands.put("logout", new LogoutCommand());
-    }
-
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         process(request, response);
     }
 
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         process(request, response);
     }
 
 
-    private void process(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
-        String path = request.getRequestURI();
-        path = path.replaceAll(".*/myWeb_war_exploded/" , "");
-        System.out.println(path);
-        Command command = commands.getOrDefault(
-                path,
-                (r)->"/index.jsp");
+    private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        System.out.println(command.getClass().getName());
-        String page = command.execute(request);
-        if(page.contains("redirect:")){
-            response.sendRedirect(page.replace("redirect:", "/myWeb_war_exploded"));
-        }else {
-            request.getRequestDispatcher(page).forward(request, response);
+
+        String commandName = request.getParameter("command");
+        System.out.println("Servlet " + commandName);
+        System.out.println("Attribute " + request.getAttribute("command"));
+        System.out.println("Param " + request.getParameter("command"));
+
+        // obtain command object by its name
+        Command command = CommandContainer.get(commandName);
+
+        // execute command and get forward address
+        String forward = command.execute(request, response);
+
+        System.out.println("Forward " + forward);
+
+
+
+        if (forward.contains("redirect:")) {
+            System.out.println("Redirect: " + forward);
+            response.sendRedirect(request.getContextPath() + "/controller?command=" + forward.replaceAll("redirect:", ""));
+        } else {
+            System.out.println("Forward: " + commandName);
+            RequestDispatcher disp = request.getRequestDispatcher(forward);
+            disp.forward(request, response);
         }
     }
+
 }

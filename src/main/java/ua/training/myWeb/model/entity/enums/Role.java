@@ -3,7 +3,7 @@ package ua.training.myWeb.model.entity.enums;
 import java.util.Locale;
 
 public enum Role {
-    USER(1), ADMIN(2);
+    USER(1), ADMIN(2), UNKNOWN(3);
 
     private final int value;
     Role(int value) {

@@ -1,0 +1,114 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%@ include file="/WEB-INF/jspf/head.jspf" %>
+</head>
+<body>
+<%@ include file="/WEB-INF/jspf/simple-nav.jspf" %>
+<h1><%= "My profile" %>
+</h1>
+<br/>
+
+<br>
+<h1 class="text-dark" align="center">Editions to subscribe</h1>
+<br>
+
+<div class="d-flex justify-content-center">
+    <form class="align-content-center">
+        <label for="themeId" class="px-2">Theme: </label>
+        <select id="themeId" name="themeId" class="px-2">
+            <option value="0">All</option>
+        </select>
+
+        <label for="sort" class="px-2">Sort by: </label>
+        <select id="sort" name="sort">
+            <option value="names">By names</option>
+            <option value="priceLowest">By price (to lowest)</option>
+            <option value="priceHighest">By price (to highest)</option>
+        </select>
+
+        <label class="px-2">Search: </label>
+        <input type="text" name="search" placeholder="Search for..." >
+
+        <input type="submit" value="Search" class="btn btn-secondary" class="px-2">
+    </form>
+</div>
+
+<br>
+<br>
+
+
+<c:forEach var="editionRow" items="${editionsList}">
+    <div class="d-flex justify-content-center">
+        <c:forEach var="edition" items="${editionRow}">
+            <div class="p-2">
+                <div class="card px-3">
+                    <div class="container">
+                        <div class="d-flex flex-row">
+                            <div class="p-2">
+                                <div class="text-dark py-xl-2">
+                                    <div class="row"><b><h5>${edition.name}</h5></b></div>
+                                    <div class="row"><b><h6>${edition.price}$ per month</h6></b></div>
+                                    <div class="row"><b><h6>${edition.theme.name}</h6></b></div>
+                                </div>
+                            </div>
+
+                            <div class="pl-md-5 py-4">
+
+                                <form method="post" action="controller">
+                                    <input type="hidden" name="editionId" value="${edition.id}">
+
+                                    <c:if test="${not empty sessionScope.user}"><input type="hidden" name="command"
+                                                                                       value="subscribe"></c:if>
+                                    <c:if test="${empty sessionScope.user}"><input type="hidden" name="command"
+                                                                                   value="login"></c:if>
+                                    <input type="submit" class="btn btn-info" value="Subscribe">
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</c:forEach>
+<br>
+<c:if test="${noOfPages > 1}">
+    <div class="d-flex justify-content-center">
+            <%--For displaying Previous link except for the 1st page --%>
+        <table border="1" cellpadding="5" cellspacing="5">
+            <tr>
+                <c:if test="${currentPage != 1}">
+                    <td><a href="?command=main&page=${currentPage - 1}">Previous</a></td>
+                </c:if>
+
+                    <%--For displaying Page numbers.
+                    The when condition does not display a link for the current page--%>
+
+
+                <c:forEach begin="1" end="${noOfPages}" var="i">
+                    <c:choose>
+                        <c:when test="${currentPage eq i}">
+                            <td>${i}</td>
+                        </c:when>
+                        <c:otherwise>
+                            <td><a href="?command=main&page=${i}">${i}</a></td>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+
+
+                    <%--For displaying Next link --%>
+                <c:if test="${currentPage lt noOfPages}">
+                    <td><a href="?command=main&page=${currentPage + 1}">Next</a></td>
+                </c:if>
+            </tr>
+        </table>
+    </div>
+</c:if>
+
+</body>
+</html>

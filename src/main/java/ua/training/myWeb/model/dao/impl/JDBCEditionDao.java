@@ -64,6 +64,41 @@ public class JDBCEditionDao implements EditionDao {
     }
 
     @Override
+    public List<Edition> findAllWithOffsetLimit(long offset, long limit) {
+        List<Edition> editions = new ArrayList<>();
+        EditionMapper mapper = new EditionMapper();
+        try {
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    MySQLCommands.FIND_ALL_EDITIONS_OFFSET_LIMIT)) {
+                stmt.setLong(1, offset);
+                stmt.setLong(2, limit);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) editions.add(mapper.extractFromResultSet(rs));
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return editions;
+    }
+
+    @Override
+    public Long count() {
+        Long result = null;
+        try {
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    MySQLCommands.EDITIONS_COUNT)) {
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) result = rs.getLong("number");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
     public void update(Edition entity) {
         try (PreparedStatement stmt = connection.prepareStatement(
                 MySQLCommands.UPDATE_EDITION)) {
@@ -86,6 +121,7 @@ public class JDBCEditionDao implements EditionDao {
             ex.printStackTrace();
         }
     }
+
 
     @Override
     public void close() throws Exception {

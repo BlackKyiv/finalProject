@@ -6,10 +6,11 @@ public interface GenericDao<T> extends AutoCloseable {
 
     void create(T entity);
 
-
     T findById(long id);
 
     List<T> findAll();
+
+    Long count();
 
     void update(T entity);
 

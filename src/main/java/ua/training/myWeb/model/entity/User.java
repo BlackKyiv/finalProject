@@ -64,5 +64,9 @@ public class User extends Entity {
     public void setStatus(UserStatus statusId) {
         this.status = statusId;
     }
+
+    public String toString(){
+        return getId() + " " + getLogin() + " " +  getAccount() + " " +  getRole() + " " +  getStatus();
+    }
 }
 

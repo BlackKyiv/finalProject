@@ -1,14 +1,32 @@
 package ua.training.myWeb.model;
 
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
 public class DBManager {
 
-    public static final String URL = "jdbc:mysql://localhost:3306/finaldb?user=root&password=root";
+    private static DataSource dataSource;
+    private static final String JNDI_LOOKUP_SERVICE = "java:/comp/env/jdbc/editions";
+
+    static {
+        try {
+            Context context = new InitialContext();
+            Object lookup = context.lookup(JNDI_LOOKUP_SERVICE);
+            if (lookup != null) {
+                dataSource = (DataSource) lookup;
+            }
+        } catch (NamingException e) {
+
+            e.printStackTrace();
+        }
+    }
+
     private static DBManager dbManager;
 
     public static DBManager getInstance() {
@@ -18,15 +36,16 @@ public class DBManager {
 
 
     public Connection getConnection() {
-        Connection connection = null;
+
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/finaldb", "root", "root");
+            Connection connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+            return connection;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return connection;
+        return null;
     }
 
 

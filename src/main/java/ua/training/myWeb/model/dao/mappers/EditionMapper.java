@@ -17,7 +17,10 @@ public class EditionMapper implements ObjectMapper<Edition> {
         edition.setId(rs.getLong("id_edition"));
         edition.setName(rs.getString("name"));
         edition.setPrice(rs.getDouble("price"));
-        edition.setTheme(new Theme(rs.getString("theme")));
+        Theme theme = new Theme();
+        theme.setName(rs.getString("theme"));
+        theme.setId(rs.getLong("id_theme"));
+        edition.setTheme(theme);
         edition.setStatus(EditionStatus.getEditionStatus(rs.getString("edition_status")));
 
         return edition;

@@ -31,11 +31,12 @@ public class AuthFilter implements Filter {
 
         System.out.println("Filter");
         if (accessAllowed(request)) {
-            log.debug("Filter finished");
+            System.out.println("Access allowed");
             chain.doFilter(request, response);
         } else {
             String errorMessasge = "You do not have permission to access the requested resource";
 
+            System.out.println("Access not allowed");
             request.setAttribute("errorMessage", errorMessasge);
             log.trace("Set the request attribute: errorMessage --> " + errorMessasge);
             request.getRequestDispatcher(Path.ERROR_PAGE)
@@ -74,6 +75,7 @@ public class AuthFilter implements Filter {
         // roles
         accessMap.put(Role.ADMIN, asList(fConfig.getInitParameter("admin")));
         accessMap.put(Role.USER, asList(fConfig.getInitParameter("user")));
+
 //        log.trace("Access map --> " + accessMap);
 
         // commons

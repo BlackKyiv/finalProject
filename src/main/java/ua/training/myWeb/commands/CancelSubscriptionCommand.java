@@ -13,7 +13,7 @@ public class CancelSubscriptionCommand extends Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        String forward = Path.USER_PROFILE_PAGE;
+        String forward = "redirect:profile";
         System.out.println("canceling " + request.getParameter("subscriptionId"));
         System.out.println("canceling " + request.getSession().getAttribute("user"));
         if (request.getParameter("subscriptionId") != null &&

@@ -31,36 +31,30 @@ public class ProfileCommand extends Command {
         User user = (User) request.getSession().getAttribute("user");
 
 
-        if (role == Role.USER) {
-            forward = Path.USER_PROFILE_PAGE;
-            log.info(role.toString().toLowerCase() + " accessed profile");
-            try (SubscriptionDao subscriptionDao = JDBCDaoFactory.getInstance().createSubscriptionDao()) {
-                long page = 1;
-                long recordsPerPage = 4;
-                if (request.getParameter("page") != null)
-                    page = Integer.parseInt(request.getParameter("page"));
+        forward = Path.USER_PROFILE_PAGE;
+        log.info(role.toString().toLowerCase() + " accessed profile");
+        try (SubscriptionDao subscriptionDao = JDBCDaoFactory.getInstance().createSubscriptionDao()) {
+            long page = 1;
+            long recordsPerPage = 4;
+            if (request.getParameter("page") != null)
+                page = Integer.parseInt(request.getParameter("page"));
 
-                List<List<Subscription>> subscriptionList = Lists.partition(
-                        subscriptionDao.findByUserIdOffsetAndLimit(user.getId(), (page - 1) * recordsPerPage, recordsPerPage), 2);
+            List<List<Subscription>> subscriptionList = Lists.partition(
+                    subscriptionDao.findByUserIdOffsetAndLimit(user.getId(), (page - 1) * recordsPerPage, recordsPerPage), 2);
 
-                request.setAttribute("subscriptionList", subscriptionList);
+            request.setAttribute("subscriptionList", subscriptionList);
 
-                long noOfRecords = subscriptionDao.count();
-                long noOfPages = (long) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+            long noOfRecords = subscriptionDao.countUser(user.getId());
+            long noOfPages = (long) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
-                request.setAttribute("noOfPages", noOfPages);
-                request.setAttribute("currentPage", page);
+            request.setAttribute("noOfPages", noOfPages);
+            request.setAttribute("currentPage", page);
 
-            } catch (Exception e) {
-                e.printStackTrace();
-                forward = Path.ERROR_PAGE;
-            }
-
-
-        } else if (role == Role.ADMIN) {
-            forward = Path.USER_PROFILE_PAGE;
-            log.info(role.toString().toLowerCase() + " accessed profile");
+        } catch (Exception e) {
+            e.printStackTrace();
+            forward = Path.ERROR_PAGE;
         }
+
 
         log.debug("Command finished");
 

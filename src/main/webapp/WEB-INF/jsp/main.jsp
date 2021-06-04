@@ -15,23 +15,58 @@
 <br>
 
 <div class="d-flex justify-content-center">
-    <form class="align-content-center">
+    <form class="align-content-center" method="get" action="controller">
         <label for="themeId" class="px-2">Theme: </label>
         <select id="themeId" name="themeId" class="px-2">
             <option value="0">All</option>
+            <c:forEach var="theme" items="${themes}">
+                <c:choose>
+                    <c:when test="${theme.id == themeId}">
+                        <option value="${theme.id}" selected>${theme.name}</option>
+                    </c:when>
+                    <c:otherwise>
+                        <option value="${theme.id}">${theme.name}</option>
+                    </c:otherwise>
+                </c:choose>
+            </c:forEach>
         </select>
 
         <label for="sort" class="px-2">Sort by: </label>
         <select id="sort" name="sort">
-            <option value="names">By names</option>
-            <option value="priceLowest">By price (to lowest)</option>
-            <option value="priceHighest">By price (to highest)</option>
+
+            <c:choose>
+                <c:when test="${sort == 'names'}">
+                    <option value="names" selected>By names</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="names">By names</option>
+                </c:otherwise>
+            </c:choose>
+
+            <c:choose>
+                <c:when test="${sort == 'priceHighest'}">
+                    <option value="priceHighest" selected>By price (to highest)</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="priceHighest">By price (to highest)</option>
+                </c:otherwise>
+            </c:choose>
+
+            <c:choose>
+                <c:when test="${sort == 'priceLowest'}">
+                    <option value="priceLowest" selected>By price (to lowest)</option>
+                </c:when>
+                <c:otherwise>
+                    <option value="priceLowest">By price (to lowest)</option>
+                </c:otherwise>
+            </c:choose>
+
         </select>
 
         <label class="px-2">Search: </label>
-        <input type="text" name="search" placeholder="Search for..." >
-
-        <input type="submit" value="Search" class="btn btn-secondary" class="px-2">
+        <input type="text" name="query" placeholder="Search for...">
+        <input type="hidden" name="command" value="main">
+        <input type="submit" value="Search" class="btn btn-secondary">
     </form>
 </div>
 
@@ -63,7 +98,8 @@
                                                                                        value="subscribe"></c:if>
                                     <c:if test="${empty sessionScope.user}"><input type="hidden" name="command"
                                                                                    value="login"></c:if>
-                                    <input type="submit" class="btn btn-info" value="Subscribe">
+                                    <input type="submit" class="btn btn-info" value="Subscribe"
+                                           onclick="return confirm('Are you sure you want to subscribe to '+'${edition.name}'+'?')">
                                 </form>
 
 
@@ -78,32 +114,27 @@
 <br>
 <c:if test="${noOfPages > 1}">
     <div class="d-flex justify-content-center">
-            <%--For displaying Previous link except for the 1st page --%>
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <c:if test="${currentPage != 1}">
-                    <td><a href="?command=main&page=${currentPage - 1}">Previous</a></td>
+                    <td><a href="?command=main&page=${currentPage - 1}&themeId=${themeId}&sort=${sort}&query=${query}">Previous</a>
+                    </td>
                 </c:if>
-
-                    <%--For displaying Page numbers.
-                    The when condition does not display a link for the current page--%>
-
-
                 <c:forEach begin="1" end="${noOfPages}" var="i">
                     <c:choose>
                         <c:when test="${currentPage eq i}">
                             <td>${i}</td>
                         </c:when>
                         <c:otherwise>
-                            <td><a href="?command=main&page=${i}">${i}</a></td>
+                            <td>
+                                <a href="?command=main&page=${i}&themeId=${themeId}&sort=${sort}&query=${query}">${i}</a>
+                            </td>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
-
-
-                    <%--For displaying Next link --%>
                 <c:if test="${currentPage lt noOfPages}">
-                    <td><a href="?command=main&page=${currentPage + 1}">Next</a></td>
+                    <td><a href="?command=main&page=${currentPage + 1}&themeId=${themeId}&sort=${sort}&query=${query}">Next</a>
+                    </td>
                 </c:if>
             </tr>
         </table>

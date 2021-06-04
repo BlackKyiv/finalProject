@@ -6,6 +6,7 @@ import ua.training.myWeb.model.dao.UserDao;
 import ua.training.myWeb.model.dao.impl.JDBCDaoFactory;
 import ua.training.myWeb.model.entity.User;
 import ua.training.myWeb.model.entity.enums.Role;
+import ua.training.myWeb.model.entity.enums.UserStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,16 +59,23 @@ public class LoginCommand extends Command {
 
             request.setAttribute("errorMessage", errorMessage);
 
-            return forward;
+            return "redirect:login";
+        } else if (user.getStatus() == UserStatus.BLOCKED) {
+            errorMessage = "You were blocked go away!";
+
+            request.setAttribute("errorMessage", errorMessage);
+
+            return Path.ERROR_PAGE;
         } else {
             Role userRole = user.getRole();
+
+
             log.trace("userRole --> " + userRole);
             forward = "redirect:profile";
 
             session.setAttribute("user", user);
             System.out.println("Set the session attribute: user --> " + user);
 
-            System.out.println("Fucking command " + request.getAttribute("command"));
 
             session.setAttribute("userRole", userRole);
             System.out.println("Set the session attribute: userRole --> " + userRole);

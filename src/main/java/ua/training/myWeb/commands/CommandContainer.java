@@ -21,6 +21,17 @@ public class CommandContainer {
         commands.put("replenish", new ReplenishCommand());
         commands.put("subscribe", new SubscribeCommand());
         commands.put("cancelSubscription", new CancelSubscriptionCommand());
+        commands.put("editions", new EditionsCommand());
+        commands.put("createEdition", new CreateEditionCommand());
+        commands.put("updateEdition", new UpdateEditionCommand());
+        commands.put("deleteEdition", new DeleteEditionCommand());
+        commands.put("users", new UsersCommand());
+        commands.put("updateUser", new UpdateUserCommand());
+        commands.put("deleteUser", new DeleteUserCommand());
+        commands.put("themes", new ThemesCommand());
+        commands.put("createTheme", new CreateThemeCommand());
+        commands.put("updateTheme", new UpdateThemeCommand());
+        commands.put("deleteTheme", new DeleteThemeCommand());
 
         log.debug("Command container was successfully initialized");
         log.trace("Number of commands --> " + commands.size());

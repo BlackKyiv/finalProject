@@ -41,7 +41,7 @@ public class MySQLCommands {
             = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme WHERE id_edition = ? LIMIT 1";
 
     public static final String INSERT_EDITION
-            = "INSERT INTO edition (name, price, account, theme_id, edition_status) VALUES (?,?,?,?,?)";
+            = "INSERT INTO edition (name, price, theme_id, edition_status) VALUES (?,?,?,?)";
 
     public static final String DELETE_EDITION
             = "DELETE FROM edition WHERE id_edition = ?";
@@ -50,18 +50,32 @@ public class MySQLCommands {
             = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme";
 
 
-
     public static final String FIND_ALL_EDITIONS_OFFSET_LIMIT
-            = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme LIMIT ?, ?";
+            = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme ORDER BY name ASC LIMIT ?, ?";
 
-    public static final String FIND_ALL_SPECIFIC_STATUS_EDITIONS
-            = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme WHERE edition_status = ?";
+    public static final String FIND_ALL_EDITIONS_OFFSET_LIMIT_ACTIVE
+            = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme WHERE edition_status = 'active' ORDER BY name ASC LIMIT ?, ?";
 
-    public static final String FIND_ALL_SPECIFIC_THEME_EDITIONS
-            = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme WHERE theme = ?";
+
+    public static final String FIND_ALL_EDITIONS_OFFSET_LIMIT_ORDER_PRICE_DESC
+            = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme WHERE edition_status = 'active' ORDER BY price DESC LIMIT ?, ?";
+
+    public static final String FIND_ALL_EDITIONS_OFFSET_LIMIT_ORDER_PRICE_ASC
+            = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme WHERE edition_status = 'active' ORDER BY price DESC LIMIT ?, ?";
+
+    public static final String FIND_BY_THEME_EDITIONS_OFFSET_LIMIT_ORDER_PRICE_DESC
+            = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme WHERE (edition_status = 'active') AND (theme_id = ?) ORDER BY price DESC LIMIT ?, ?";
+
+    public static final String FIND_BY_THEME_EDITIONS_OFFSET_LIMIT_ORDER_PRICE_ASC
+            = "SELECT * FROM edition e INNER JOIN theme t ON e.theme_id = t.id_theme WHERE (edition_status = 'active') AND (theme_id = ?) ORDER BY price DESC LIMIT ?, ?";
+
+
 
     public static final String EDITIONS_COUNT
             = "SELECT COUNT(id_edition) AS number FROM edition";
+
+    public static final String EDITIONS_COUNT_ACTIVE
+            = "SELECT COUNT(id_edition) AS number FROM edition WHERE edition_status = 'active'";
 
 
     //Subscription sql
@@ -102,6 +116,9 @@ public class MySQLCommands {
     public static final String SUBSCRIPTIONS_COUNT
             = "SELECT COUNT(id_subscription) AS number FROM subscription";
 
+    public static final String SUBSCRIPTIONS_COUNT_USER
+            = "SELECT COUNT(id_subscription) AS number FROM subscription WHERE user_id = ?";
+
 
     //Theme sql
 
@@ -118,5 +135,8 @@ public class MySQLCommands {
     public static final String THEME_COUNT
             = "SELECT COUNT(id_theme) AS number FROM theme";
 
-    private MySQLCommands(){};
+    private MySQLCommands() {
+    }
+
+    ;
 }

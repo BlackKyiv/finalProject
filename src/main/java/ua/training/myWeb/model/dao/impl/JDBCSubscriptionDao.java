@@ -155,4 +155,21 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
         }
         return subscriptions;
     }
+
+    @Override
+    public Long countUser(long userId) {
+        Long result = null;
+        try {
+            try (PreparedStatement stmt = connection.prepareStatement(
+                    MySQLCommands.SUBSCRIPTIONS_COUNT_USER)) {
+                stmt.setLong(1, userId);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) result = rs.getLong("number");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return result;
+    }
 }

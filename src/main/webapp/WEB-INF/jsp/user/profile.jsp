@@ -63,7 +63,8 @@
                                     <input type="hidden" name="subscriptionId" value="${subscription.id}">
                                     <input type="hidden" name="editionId" value="${subscription.edition.id}">
                                     <input type="hidden" name="command" value="cancelSubscription">
-                                    <input type="submit" class="btn btn-danger" value="Cancel">
+                                    <input type="submit" class="btn btn-danger" value="Cancel"
+                                           onclick="return confirm('Are you sure you want to cancel subscription '+'${subscription.edition.name}'+'?')">
                                 </form>
 
                             </div>

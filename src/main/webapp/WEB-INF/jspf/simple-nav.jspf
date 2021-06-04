@@ -13,12 +13,27 @@
                 <div class="navbar-nav">
                     <a href="?command=profile" class="nav-item nav-link">Profile</a>
                 </div>
+                <c:if test="${sessionScope.userRole.toString() == 'admin'}">
+                    <div class="navbar-nav">
+                        <a href="?command=themes" class="nav-item nav-link">Manage Themes</a>
+                    </div>
+
+                    <div class="navbar-nav">
+                        <a href="?command=editions" class="nav-item nav-link">Manage Editions</a>
+                    </div>
+
+                    <div class="navbar-nav">
+                        <a href="?command=users" class="nav-item nav-link">Manage Users</a>
+                    </div>
+                </c:if>
             </div>
+
 
             <form method="get" action="controller">
                 <input type="hidden" name="command" value="logout">
                 <input type="submit" value="Logout" class="btn btn-danger">
             </form>
+
         </c:when>
         <c:otherwise>
             <div id="navbarCollapse" class="collapse navbar-collapse align-content-start"></div>

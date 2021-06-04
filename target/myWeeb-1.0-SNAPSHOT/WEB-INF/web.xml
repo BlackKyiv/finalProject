@@ -13,7 +13,6 @@
     </resource-ref>
 
 
-
     <!-- Welcome files -->
     <welcome-file-list>
 
@@ -45,21 +44,20 @@
 
         <init-param>
             <param-name>admin</param-name>
-            <param-value></param-value>
+            <param-value>users blockUser deleteUser updateUser editions updateEdition deleteEdition createEdition themes updateTheme deleteTheme createTheme</param-value>
         </init-param>
         <init-param>
             <param-name>user</param-name>
-            <param-value>subscribe</param-value>
+            <param-value></param-value>
         </init-param>
         <init-param>
             <param-name>common</param-name>
-            <param-value>logout noCommand profile main replenish cancelSubscription</param-value>
+            <param-value>subscribe logout noCommand profile main replenish cancelSubscription</param-value>
         </init-param>
         <init-param>
             <param-name>out-of-control</param-name>
             <param-value>login register main</param-value>
         </init-param>
-
 
 
     </filter>

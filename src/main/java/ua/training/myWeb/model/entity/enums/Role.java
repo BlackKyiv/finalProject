@@ -6,6 +6,7 @@ public enum Role {
     USER(1), ADMIN(2), UNKNOWN(3);
 
     private final int value;
+
     Role(int value) {
         this.value = value;
     }
@@ -27,6 +28,7 @@ public enum Role {
     }
 
     public String toString() {
+        System.out.println(this.name().toLowerCase(Locale.ROOT));
         return this.name().toLowerCase(Locale.ROOT);
     }
 

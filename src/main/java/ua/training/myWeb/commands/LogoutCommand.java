@@ -22,6 +22,6 @@ public class LogoutCommand extends Command{
             session.invalidate();
 
         log.debug("Command finished");
-        return Path.LOGIN_PAGE;
+        return "redirect:login";
     }
 }

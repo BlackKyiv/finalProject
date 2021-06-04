@@ -13,28 +13,31 @@
           action="controller" method="post"
           class=" pt-5">
         <div class="form-outline mb-4">
-            <h3 class="d-flex justify-content-center">Register</h3>
+            <h3 class="d-flex justify-content-center"><fmt:message key="text.register"/></h3>
         </div>
 
         <div class="form-group">
-            <input type="text" name="login" id="form1Example1" class="form-control" placeholder="Create login"
+            <input type="text" name="login" id="form1Example1" class="form-control"
+                   placeholder="<fmt:message key="text.placeholder.createLogin"/>"
                    required/>
         </div>
 
 
         <div class="form-group">
-            <input type="password" name="password"  class="form-control" placeholder="Create password"
+            <input type="password" name="password" class="form-control"
+                   placeholder="<fmt:message key="text.placeholder.createPassword"/>"
                    required/>
         </div>
         <div class="form-group">
-            <input type="password" name="passwordRepeat" class="form-control" placeholder="Repeat password"
+            <input type="password" name="passwordRepeat" class="form-control"
+                   placeholder="<fmt:message key="text.placeholder.repeatPassword"/>"
                    required/>
         </div>
         <div class="text-center">
-            <input type="submit" value="Register" id="submit" class="btn btn-success">
+            <input type="submit" value="<fmt:message key="text.button.register"/>" id="submit" class="btn btn-success">
         </div>
 
-        <input type="hidden" name="command" value="register" >
+        <input type="hidden" name="command" value="register">
     </form>
 </div>
 

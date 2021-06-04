@@ -31,6 +31,7 @@ public class CommandContainer {
         commands.put("themes", new ThemesCommand());
         commands.put("createTheme", new CreateThemeCommand());
         commands.put("updateTheme", new UpdateThemeCommand());
+        commands.put("changeLang", new ChangeLangCommand());
         commands.put("deleteTheme", new DeleteThemeCommand());
 
         log.debug("Command container was successfully initialized");

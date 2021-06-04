@@ -11,12 +11,12 @@
 <br/>
 
 <br>
-<h1 class="text-dark" align="center">Editions to subscribe</h1>
+<h1 class="text-dark" align="center"><fmt:message key="text.edition"/></h1>
 <br>
 
 <div class="d-flex justify-content-center">
     <form class="align-content-center" method="get" action="controller">
-        <label for="themeId" class="px-2">Theme: </label>
+        <label for="themeId" class="px-2"><fmt:message key="text.label.theme"/>: </label>
         <select id="themeId" name="themeId" class="px-2">
             <option value="0">All</option>
             <c:forEach var="theme" items="${themes}">
@@ -31,7 +31,7 @@
             </c:forEach>
         </select>
 
-        <label for="sort" class="px-2">Sort by: </label>
+        <label for="sort" class="px-2"><fmt:message key="text.label.sortBy"/>: </label>
         <select id="sort" name="sort">
 
             <c:choose>
@@ -63,10 +63,10 @@
 
         </select>
 
-        <label class="px-2">Search: </label>
+        <label class="px-2"><fmt:message key="text.label.search"/>: </label>
         <input type="text" name="query" placeholder="Search for...">
         <input type="hidden" name="command" value="main">
-        <input type="submit" value="Search" class="btn btn-secondary">
+        <input type="submit" value="<fmt:message key="text.label.search"/>" class="btn btn-secondary">
     </form>
 </div>
 
@@ -84,7 +84,7 @@
                             <div class="p-2">
                                 <div class="text-dark py-xl-2">
                                     <div class="row"><b><h5>${edition.name}</h5></b></div>
-                                    <div class="row"><b><h6>${edition.price}$ per month</h6></b></div>
+                                    <div class="row"><b><h6>${edition.price}$ <fmt:message key="text.label.perMonth"/></h6></b></div>
                                     <div class="row"><b><h6>${edition.theme.name}</h6></b></div>
                                 </div>
                             </div>
@@ -98,7 +98,7 @@
                                                                                        value="subscribe"></c:if>
                                     <c:if test="${empty sessionScope.user}"><input type="hidden" name="command"
                                                                                    value="login"></c:if>
-                                    <input type="submit" class="btn btn-info" value="Subscribe"
+                                    <input type="submit" class="btn btn-info" value="<fmt:message key="text.button.subscribe"/>"
                                            onclick="return confirm('Are you sure you want to subscribe to '+'${edition.name}'+'?')">
                                 </form>
 

@@ -59,13 +59,13 @@ public class LoginCommand extends Command {
 
             request.setAttribute("errorMessage", errorMessage);
 
-            return "redirect:login";
+            forward = "redirect:login";
         } else if (user.getStatus() == UserStatus.BLOCKED) {
             errorMessage = "You were blocked go away!";
 
             request.setAttribute("errorMessage", errorMessage);
 
-            return Path.ERROR_PAGE;
+            forward = Path.ERROR_PAGE;
         } else {
             Role userRole = user.getRole();
 
@@ -86,22 +86,10 @@ public class LoginCommand extends Command {
 
             // work with i18n
             //TODO locale
-//            String userLocaleName = user.getLocaleName();
-//            log.trace("userLocalName --> " + userLocaleName);
-//
-//            if (userLocaleName != null && !userLocaleName.isEmpty()) {
-//                Config.set(session, "javax.servlet.jsp.jstl.fmt.locale", userLocaleName);
-//
-//                session.setAttribute("defaultLocale", userLocaleName);
-//
-//
-//                log.trace("Set the session attribute: defaultLocaleName --> " + userLocaleName);
-//                log.info("Locale for user: defaultLocale --> " + userLocaleName);
-//            }
+            session.setAttribute("lang", "ua");
 
         }
 
-        System.out.println("Fucking command " + request.getAttribute("command"));
         return forward;
     }
 }

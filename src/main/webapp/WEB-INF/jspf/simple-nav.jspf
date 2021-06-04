@@ -1,17 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="text" />
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <a href="controller?command=main" class="navbar-brand">Editions</a>
+    <a href="controller?command=main" class="navbar-brand"><fmt:message key="text.button.edition"/></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
     </button>
+
     <c:choose>
         <c:when test="${not empty sessionScope.user}">
             <div id="navbarCollapse" class="collapse navbar-collapse align-content-start">
                 <div class="navbar-nav">
-                    <a href="controller?command=replenish" class="nav-item nav-link">Replenish</a>
+                    <a href="controller?command=replenish" class="nav-item nav-link"><fmt:message key="text.button.replenish"/></a>
                 </div>
                 <div class="navbar-nav">
-                    <a href="?command=profile" class="nav-item nav-link">Profile</a>
+                    <a href="?command=profile" class="nav-item nav-link"><fmt:message key="text.button.profile"/></a>
                 </div>
                 <c:if test="${sessionScope.userRole.toString() == 'admin'}">
                     <div class="navbar-nav">
@@ -28,24 +32,54 @@
                 </c:if>
             </div>
 
+            <form method="get" action="controller" class="align-self-end px-1">
+                <input type="hidden" name="command" value="changeLang">
+                <input type="hidden" name="oldCommand" value="${param.command}">
+                <input type="hidden" name="lang" value="en">
+                <input type="submit" value="En" class="btn btn-secondary">
+            </form>
+            <form method="get" action="controller" class="align-self-end px-1">
+                <input type="hidden" name="command" value="changeLang">
+                <input type="hidden" name="oldCommand" value="${param.command}">
+                <input type="hidden" name="lang" value="ua">
+                <input type="submit" value="Ua" class="btn btn-secondary">
+            </form>
 
-            <form method="get" action="controller">
+
+            <form method="get" action="controller" class="align-self-end px-1">
                 <input type="hidden" name="command" value="logout">
-                <input type="submit" value="Logout" class="btn btn-danger">
+                <input type="submit" value="<fmt:message key="text.button.logout"/>" class="btn btn-danger">
             </form>
 
         </c:when>
+
         <c:otherwise>
             <div id="navbarCollapse" class="collapse navbar-collapse align-content-start"></div>
 
             <form method="get" action="controller" class="align-self-end px-1">
+                <input type="hidden" name="command" value="changeLang">
+                <input type="hidden" name="oldCommand" value="${param.command}">
+                <input type="hidden" name="lang" value="en">
+                <input type="submit" value="En" class="btn btn-secondary">
+            </form>
+
+            <form method="get" action="controller" class="align-self-end px-1">
+                <input type="hidden" name="command" value="changeLang">
+                <input type="hidden" name="oldCommand" value="${param.command}">
+                <input type="hidden" name="lang" value="ua">
+                <input type="submit" value="Ua" class="btn btn-secondary">
+            </form>
+
+
+
+            <form method="get" action="controller" class="align-self-end px-1">
                 <input type="hidden" name="command" value="register">
-                <input type="submit" value="Register" class="btn btn-success">
+                <input type="submit" value="<fmt:message key="text.button.register"/>" class="btn btn-success">
             </form>
 
             <form method="get" action="controller" class="align-self-end px-1">
                 <input type="hidden" name="command" value="login">
-                <input type="submit" value="Login" class="btn btn-info">
+                <input type="submit" value="<fmt:message key="text.button.login"/>" class="btn btn-info">
             </form>
         </c:otherwise>
     </c:choose>

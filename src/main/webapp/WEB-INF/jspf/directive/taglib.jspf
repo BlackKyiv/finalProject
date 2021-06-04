@@ -13,5 +13,8 @@ JSTL i18n tag library.
 ===========================================================================--%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
+<fmt:setLocale value="${sessionScope.lang}"/>;
+<fmt:setBundle basename="text"/>
+
 <%--<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>--%>
 <%--<%@ taglib prefix='spring' uri='http://www.springframework.org/tags'%>--%>

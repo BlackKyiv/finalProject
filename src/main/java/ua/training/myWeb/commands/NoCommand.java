@@ -12,11 +12,7 @@ public class NoCommand extends Command{
     private static final Logger log = Logger.getLogger(NoCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request,
-                          HttpServletResponse response) {
-        log.debug("Command starts");
-
-        log.debug("Command finished");
+    public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         return Path.ERROR_PAGE;
     }

@@ -28,9 +28,9 @@
                     </div>
                     <div class="p-2">
                         <div class="text-profile py-xl-2">
-                            <div class="row"><h5 class="text-profile"><b>Login:</b> ${user.login}</h5></div>
-                            <div class="row"><h5 class="text-profile"><b>Role:</b> ${user.role.toString()} </h5></div>
-                            <div class="row"><h5 class="text-profile"><b>Account:</b> ${user.account} $ </h5></div>
+                            <div class="row"><h5 class="text-profile"><b><fmt:message key="text.login"/>:</b> ${user.login}</h5></div>
+                            <div class="row"><h5 class="text-profile"><b><fmt:message key="text.profile.role"/>:</b> ${user.role.toString()} </h5></div>
+                            <div class="row"><h5 class="text-profile"><b><fmt:message key="text.profile.account"/>:</b> ${user.account} $ </h5></div>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
 </div>
 
 <br>
-<h3 class="text-secondary" align="center">My subscriptions</h3>
+<h3 class="text-secondary" align="center"><fmt:message key="text.mySubscriptions"/></h3>
 <br>
 <c:forEach var="subscriptionRow" items="${subscriptionList}">
     <div class="d-flex justify-content-center">
@@ -53,7 +53,7 @@
                             <div class="p-2">
                                 <div class="text-dark py-xl-2">
                                     <div class="row"><b><h5>${subscription.edition.name}</h5></b></div>
-                                    <div class="row"><b><h6>${subscription.edition.price}$ per month</h6></b></div>
+                                    <div class="row"><b><h6>${subscription.edition.price}$ <fmt:message key="text.label.perMonth"/></h6></b></div>
                                     <div class="row"><b><h6>${subscription.edition.theme.name}</h6></b></div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                     <input type="hidden" name="subscriptionId" value="${subscription.id}">
                                     <input type="hidden" name="editionId" value="${subscription.edition.id}">
                                     <input type="hidden" name="command" value="cancelSubscription">
-                                    <input type="submit" class="btn btn-danger" value="Cancel"
+                                    <input type="submit" class="btn btn-danger" value="<fmt:message key="text.button.cancel"/>"
                                            onclick="return confirm('Are you sure you want to cancel subscription '+'${subscription.edition.name}'+'?')">
                                 </form>
 

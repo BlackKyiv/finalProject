@@ -15,17 +15,17 @@
 <br>
 
 <form action="controller" class="px-2" align="center">
-    <label>Name: </label>
+    <label><fmt:message key="text.button.edition"/>: </label>
     <input type="text" name="name">
-    <label>Price: </label>
+    <label><fmt:message key="text.label.price"/>: </label>
     <input type="number" step="0.01" name="price">
-    <label for="th">Theme: </label>
+    <label for="th"><fmt:message key="text.label.theme"/>: </label>
     <select id="th" name="themeId">
         <c:forEach var="theme" items="${themes}">
             <option value="${theme.id}">${theme.name}</option>
         </c:forEach>
     </select>
-    <label for="st">Status: </label>
+    <label for="st"><fmt:message key="text.label.status"/>: </label>
     <select id="st" name="status">
         <option value="active">Active</option>
         <option value="hidden">Hidden</option>
@@ -42,11 +42,11 @@
     <div class="d-flex justify-content-center">
 
         <form action="controller" class="px-2">
-            <label>Name: </label>
+            <label><fmt:message key="text.button.edition"/>: </label>
             <input type="text" name="name" value="${edition.name}">
-            <label>Price: </label>
+            <label><fmt:message key="text.label.price"/>: </label>
             <input type="number" step="0.01" name="price" value="${edition.price}">
-            <label for="themeId">Theme: </label>
+            <label for="themeId"><fmt:message key="text.label.theme"/>: </label>
             <select id="themeId" name="themeId">
                 <c:forEach var="theme" items="${themes}">
                     <c:choose>
@@ -59,7 +59,7 @@
                     </c:choose>
                 </c:forEach>
             </select>
-            <label for="status">Status: </label>
+            <label for="status"><fmt:message key="text.label.status"/>: </label>
             <select id="status" name="status">
                 <c:choose>
                     <c:when test="${edition.getStatus().toString() == 'active'}">
@@ -74,14 +74,14 @@
             </select>
             <label>&nbsp; &nbsp;</label>
 
-            <input type="submit" value="Update" class="btn btn-primary px-2">
+            <input type="submit" value="<fmt:message key="text.button.update"/>" class="btn btn-primary px-2">
             <input type="hidden" name="command" value="updateEdition">
             <input type="hidden" name="editionId" value="${edition.id}">
         </form>
 
 
         <form action="controller" class="px-2">
-            <input type="submit" value="Delete" class="btn btn-danger">
+            <input type="submit" value="<fmt:message key="text.button.delete"/>" class="btn btn-danger">
             <input type="hidden" name="command" value="deleteEdition">
             <input type="hidden" name="editionId" value="${edition.id}">
         </form>

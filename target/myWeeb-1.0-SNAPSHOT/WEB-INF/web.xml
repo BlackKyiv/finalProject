@@ -12,6 +12,9 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+    <listener>
+        <listener-class>ua.training.myWeb.listeners.ContextListener</listener-class>
+    </listener>
 
     <!-- Welcome files -->
     <welcome-file-list>
@@ -52,11 +55,11 @@
         </init-param>
         <init-param>
             <param-name>common</param-name>
-            <param-value>subscribe logout noCommand profile main replenish cancelSubscription</param-value>
+            <param-value>subscribe logout noCommand profile main replenish cancelSubscription changeLang</param-value>
         </init-param>
         <init-param>
             <param-name>out-of-control</param-name>
-            <param-value>login register main</param-value>
+            <param-value>login register main changeLang</param-value>
         </init-param>
 
 

@@ -12,14 +12,14 @@
     <form method="get" action="controller"
           class=" pt-5">
         <div class="form-outline mb-4">
-            <h3 class="d-flex justify-content-center">Replenish</h3>
+            <h3 class="d-flex justify-content-center"><fmt:message key="text.replenish"/></h3>
         </div>
 
         <div class="form-group">
             <input type="number" name="replenish" id="form1Example1" class="form-control" placeholder="Input sum" min="0" required/>
         </div>
         <div class="text-center">
-            <input type="submit" value="Replenish" id="submit" class="btn btn-primary">
+            <input type="submit" value="<fmt:message key="text.button.replenish"/>" id="submit" class="btn btn-primary">
         </div>
 
         <input type="hidden" name="command" value="replenish" >

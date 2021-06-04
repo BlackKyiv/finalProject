@@ -23,7 +23,7 @@ public class ProfileCommand extends Command {
 
         log.debug("Command starts");
 
-        String forward = Path.ERROR_PAGE;
+        String forward;
 
         System.out.println();
 

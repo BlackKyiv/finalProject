@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,19 +16,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ContextListener  implements ServletContextListener {
     private static final Logger log = Logger.getLogger(ContextListener.class);
 
-    public ConcurrentHashMap<User, String> userAndLocales;
-
-
-    public void contextDestroyed(ServletContextEvent event) {
-        log("Servlet context destruction starts");
-        // do nothing
-        log("Servlet context destruction finished");
-    }
 
     public void contextInitialized(ServletContextEvent event) {
-        log("Servlet context initialization starts");
-
         ServletContext servletContext = event.getServletContext();
+        servletContext.setAttribute("userAndLocales", new ConcurrentHashMap<String, String>());
+        servletContext.setAttribute("users", new HashSet<String>());
 //        initLog4J(servletContext);
         initCommandContainer();
         initI18N(servletContext);

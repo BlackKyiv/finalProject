@@ -1,7 +1,5 @@
 package ua.training.myWeb.commands;
 
-
-import ua.training.myWeb.Path;
 import ua.training.myWeb.services.DatabaseService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +19,7 @@ public class SubscribeCommand extends Command {
             } catch (Exception e) {
                 e.printStackTrace();
                 request.setAttribute("errorMessage", "DB error");
-                forward = Path.ERROR_PAGE;
+                forward = "redirect:noCommand";
             }
         }
 

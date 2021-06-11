@@ -1,11 +1,7 @@
 package ua.training.myWeb.commands;
 
 import ua.training.myWeb.Path;
-import ua.training.myWeb.model.dao.UserDao;
-import ua.training.myWeb.model.dao.impl.JDBCDaoFactory;
-import ua.training.myWeb.model.entity.User;
-import ua.training.myWeb.model.entity.enums.Role;
-import ua.training.myWeb.model.entity.enums.UserStatus;
+import ua.training.myWeb.services.DatabaseService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,22 +20,18 @@ public class RegisterCommand extends Command {
             String password = request.getParameter("password");
             String passwordRepeat = request.getParameter("passwordRepeat");
 
-            if(password.equals(passwordRepeat)){
-                try (UserDao userDao = JDBCDaoFactory.getInstance().createUserDao()){
-                    if(userDao.findByLogin(login) == null){
-                        User user = new User();
-                        user.setLogin(login);
-                        user.setPassword(password);
-                        user.setAccount(0.);
-                        user.setRole(Role.USER);
-                        user.setStatus(UserStatus.ACTIVE);
-                        userDao.create(user);
+            if (password.equals(passwordRepeat)) {
+                DatabaseService databaseService = new DatabaseService();
+                try {
+                    if (databaseService.createNewUser(login, password)) {
                         forward = "redirect:login";
                     } else {
-                        //TODO ERROR
+                        request.getSession().setAttribute("errorMessage", "This user already exists");
+                        forward = "redirect:noCommand";
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    request.getSession().setAttribute("errorMessage", "Unexpected error");
+                    forward = "redirect:noCommand";
                 }
             }
         }
@@ -47,4 +39,6 @@ public class RegisterCommand extends Command {
 
         return forward;
     }
+
+
 }

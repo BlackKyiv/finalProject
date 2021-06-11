@@ -6,6 +6,7 @@ import ua.training.myWeb.model.dao.ThemeDao;
 import ua.training.myWeb.model.dao.impl.JDBCDaoFactory;
 import ua.training.myWeb.model.entity.Edition;
 import ua.training.myWeb.model.entity.Theme;
+import ua.training.myWeb.services.PageFillerService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,16 +16,16 @@ public class ThemesCommand extends Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        try (ThemeDao themeDao = JDBCDaoFactory.getInstance().createThemeDao()) {
-
-            List<Theme> themeList = themeDao.findAll();
-
-            request.setAttribute("themes", themeList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Path.ERROR_PAGE;
+        PageFillerService pageFillerService = new PageFillerService();
+        try {
+            pageFillerService.fillThemesPage(request);
+        }catch (Exception e) {
+            request.getSession().setAttribute("errorMessage", "Unexpected error");
+            return  "redirect:noCommand";
         }
 
         return Path.THEMES_PAGE;
     }
+
+
 }

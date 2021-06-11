@@ -80,16 +80,11 @@
 <c:if test="${noOfPages > 1}">
     <br>
     <div class="d-flex justify-content-center">
-            <%--For displaying Previous link except for the 1st page --%>
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <c:if test="${currentPage != 1}">
-                    <td><a href="?command=profile&page=${currentPage - 1}">Previous</a></td>
+                    <td><a href="?command=profile&page=${currentPage - 1}"><fmt:message key="text.button.previous"/></a></td>
                 </c:if>
-
-                    <%--For displaying Page numbers.
-                    The when condition does not display a link for the current page--%>
-
 
                 <c:forEach begin="1" end="${noOfPages}" var="i">
                     <c:choose>
@@ -105,7 +100,7 @@
 
                     <%--For displaying Next link --%>
                 <c:if test="${currentPage lt noOfPages}">
-                    <td><a href="?command=profile&page=${currentPage + 1}">Next</a></td>
+                    <td><a href="?command=profile&page=${currentPage + 1}"><fmt:message key="text.button.next"/></a></td>
                 </c:if>
             </tr>
         </table>

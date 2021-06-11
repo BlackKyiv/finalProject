@@ -16,6 +16,10 @@
         <listener-class>ua.training.myWeb.listeners.ContextListener</listener-class>
     </listener>
 
+    <listener>
+        <listener-class>ua.training.myWeb.listeners.SessionDestroyerListener</listener-class>
+    </listener>
+
     <!-- Welcome files -->
     <welcome-file-list>
 
@@ -59,7 +63,7 @@
         </init-param>
         <init-param>
             <param-name>out-of-control</param-name>
-            <param-value>login register main changeLang</param-value>
+            <param-value>login register main changeLang noCommand</param-value>
         </init-param>
 
 

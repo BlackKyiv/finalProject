@@ -13,12 +13,12 @@ public class DeleteUserCommand extends Command{
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String forward = "redirect:users";
         if (request.getParameter("userId") != null) {
-
             long userId = Long.parseLong(request.getParameter("userId"));
             try (UserDao userDao = JDBCDaoFactory.getInstance().createUserDao()) {
                 userDao.delete(userId);
             } catch (Exception e) {
-                e.printStackTrace();
+                request.getSession().setAttribute("errorMessage", "Cannot delete this user");
+                forward = "redirect:noCommand";
             }
         } else {
             forward = "redirect:users";

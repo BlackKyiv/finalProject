@@ -3,6 +3,7 @@ package ua.training.myWeb.commands;
 import ua.training.myWeb.model.dao.ThemeDao;
 import ua.training.myWeb.model.dao.impl.JDBCDaoFactory;
 import ua.training.myWeb.model.entity.Theme;
+import ua.training.myWeb.services.DatabaseService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,21 +17,18 @@ public class UpdateThemeCommand extends Command {
 
             long themeId = Long.parseLong(request.getParameter("themeId"));
             String name = request.getParameter("name");
-
-            try (ThemeDao themeDao = JDBCDaoFactory.getInstance().createThemeDao()) {
-                Theme theme = themeDao.findById(themeId);
-                if (theme != null) {
-                    theme.setName(name);
-                    themeDao.update(theme);
-                } else {
-                    forward = "redirect:noCommand";
-                }
+            DatabaseService databaseService = new DatabaseService();
+            try {
+                databaseService.updateTheme(themeId, name);
             } catch (Exception e) {
-                e.printStackTrace();
+                request.getSession().setAttribute("errorMessage", "Unexpected error");
+                forward = "redirect:noCommand";
             }
         } else {
             forward = "redirect:noCommand";
         }
         return forward;
     }
+
+
 }

@@ -14,11 +14,15 @@ public class FilterService {
     public List<String> asList(String str) {
         List<String> list = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(str);
-        while (st.hasMoreTokens()) list.add(st.nextToken());
+        while (st.hasMoreTokens()) {
+            list.add(st.nextToken());
+        }
         return list;
     }
 
-    public boolean accessAllowed(ServletRequest request, List<String> commons, List<String> outOfControl, Map<Role, List<String>> accessMap) {
+    public boolean accessAllowed(ServletRequest request, List<String> commons,
+                                 List<String> outOfControl,
+                                 Map<Role, List<String>> accessMap) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
 
         String commandName = request.getParameter("command");
@@ -26,20 +30,20 @@ public class FilterService {
 
         System.out.println(commandName);
 
-        if (commandName == null || commandName.isEmpty())
+        if (commandName == null || commandName.isEmpty()) {
             return false;
-
-        if (outOfControl.contains(commandName))
+        }
+        if (outOfControl.contains(commandName)) {
             return true;
-
+        }
         HttpSession session = httpRequest.getSession(false);
-        if (session == null)
+        if (session == null) {
             return false;
-
+        }
         Role userRole = (Role) session.getAttribute("userRole");
-        if (userRole == null)
+        if (userRole == null) {
             return false;
-
+        }
         return accessMap.get(userRole).contains(commandName)
                 || commons.contains(commandName);
     }

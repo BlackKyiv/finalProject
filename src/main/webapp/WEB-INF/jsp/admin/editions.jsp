@@ -11,7 +11,7 @@
 <br/>
 
 <br>
-<h1 class="text-dark" align="center">Editions</h1>
+<h1 class="text-dark" align="center"><fmt:message key="text.editions"/></h1>
 <br>
 
 <form action="controller" class="px-2" align="center">
@@ -27,11 +27,11 @@
     </select>
     <label for="st"><fmt:message key="text.label.status"/>: </label>
     <select id="st" name="status">
-        <option value="active">Active</option>
-        <option value="hidden">Hidden</option>
+        <option value="active"><fmt:message key="text.list.active"/></option>
+        <option value="hidden"><fmt:message key="text.list.hidden"/></option>
     </select>
     <label>&nbsp; &nbsp;</label>
-    <input type="submit" value="Create" class="btn btn-success px-2">
+    <input type="submit" value="<fmt:message key="text.button.create"/>" class="btn btn-success px-2">
     <input type="hidden" name="command" value="createEdition">
 </form>
 
@@ -63,12 +63,12 @@
             <select id="status" name="status">
                 <c:choose>
                     <c:when test="${edition.getStatus().toString() == 'active'}">
-                        <option value="active" selected>Active</option>
-                        <option value="hidden">Hidden</option>
+                        <option value="active" selected><fmt:message key="text.list.active"/></option>
+                        <option value="hidden"><fmt:message key="text.list.hidden"/></option>
                     </c:when>
                     <c:otherwise>
-                        <option value="hidden" selected disabled>Hidden</option>
-                        <option value="active">Active</option>
+                        <option value="hidden" selected disabled><fmt:message key="text.list.hidden"/></option>
+                        <option value="active"><fmt:message key="text.list.active"/></option>
                     </c:otherwise>
                 </c:choose>
             </select>
@@ -96,7 +96,7 @@
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <c:if test="${currentPage != 1}">
-                    <td><a href="?command=editions&page=${currentPage - 1}">Previous</a></td>
+                    <td><a href="?command=editions&page=${currentPage - 1}"><fmt:message key="text.button.previous"/></a></td>
                 </c:if>
                 <c:forEach begin="1" end="${noOfPages}" var="i">
                     <c:choose>
@@ -109,7 +109,7 @@
                     </c:choose>
                 </c:forEach>
                 <c:if test="${currentPage lt noOfPages}">
-                    <td><a href="?command=editions&page=${currentPage + 1}">Next</a></td>
+                    <td><a href="?command=editions&page=${currentPage + 1}"><fmt:message key="text.button.next"/></a></td>
                 </c:if>
             </tr>
         </table>

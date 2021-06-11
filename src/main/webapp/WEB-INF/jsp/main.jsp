@@ -18,7 +18,7 @@
     <form class="align-content-center" method="get" action="controller">
         <label for="themeId" class="px-2"><fmt:message key="text.label.theme"/>: </label>
         <select id="themeId" name="themeId" class="px-2">
-            <option value="0">All</option>
+            <option value="0"><fmt:message key="text.list.all"/></option>
             <c:forEach var="theme" items="${themes}">
                 <c:choose>
                     <c:when test="${theme.id == themeId}">
@@ -36,35 +36,35 @@
 
             <c:choose>
                 <c:when test="${sort == 'names'}">
-                    <option value="names" selected>By names</option>
+                    <option value="names" selected><fmt:message key="text.list.search.byName"/></option>
                 </c:when>
                 <c:otherwise>
-                    <option value="names">By names</option>
+                    <option value="names"><fmt:message key="text.list.search.byName"/></option>
                 </c:otherwise>
             </c:choose>
 
             <c:choose>
                 <c:when test="${sort == 'priceHighest'}">
-                    <option value="priceHighest" selected>By price (to highest)</option>
+                    <option value="priceHighest" selected><fmt:message key="text.list.search.byPriceHigh"/></option>
                 </c:when>
                 <c:otherwise>
-                    <option value="priceHighest">By price (to highest)</option>
+                    <option value="priceHighest"><fmt:message key="text.list.search.byPriceHigh"/></option>
                 </c:otherwise>
             </c:choose>
 
             <c:choose>
                 <c:when test="${sort == 'priceLowest'}">
-                    <option value="priceLowest" selected>By price (to lowest)</option>
+                    <option value="priceLowest" selected><fmt:message key="text.list.search.byPriceLow"/></option>
                 </c:when>
                 <c:otherwise>
-                    <option value="priceLowest">By price (to lowest)</option>
+                    <option value="priceLowest"><fmt:message key="text.list.search.byPriceLow"/></option>
                 </c:otherwise>
             </c:choose>
 
         </select>
 
         <label class="px-2"><fmt:message key="text.label.search"/>: </label>
-        <input type="text" name="query" placeholder="Search for...">
+        <input type="text" name="query" placeholder="<fmt:message key="text.placeholder.searchFor"/>...">
         <input type="hidden" name="command" value="main">
         <input type="submit" value="<fmt:message key="text.label.search"/>" class="btn btn-secondary">
     </form>
@@ -117,7 +117,7 @@
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <c:if test="${currentPage != 1}">
-                    <td><a href="?command=main&page=${currentPage - 1}&themeId=${themeId}&sort=${sort}&query=${query}">Previous</a>
+                    <td><a href="?command=main&page=${currentPage - 1}&themeId=${themeId}&sort=${sort}&query=${query}"><fmt:message key="text.button.previous"/></a>
                     </td>
                 </c:if>
                 <c:forEach begin="1" end="${noOfPages}" var="i">
@@ -133,7 +133,7 @@
                     </c:choose>
                 </c:forEach>
                 <c:if test="${currentPage lt noOfPages}">
-                    <td><a href="?command=main&page=${currentPage + 1}&themeId=${themeId}&sort=${sort}&query=${query}">Next</a>
+                    <td><a href="?command=main&page=${currentPage + 1}&themeId=${themeId}&sort=${sort}&query=${query}"><fmt:message key="text.button.next"/></a>
                     </td>
                 </c:if>
             </tr>

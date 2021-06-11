@@ -25,9 +25,4 @@ public class EditionMapper implements ObjectMapper<Edition> {
 
         return edition;
     }
-
-    public static Subscription makeUnique(Map<Long, Subscription> cache, Subscription subscription) {
-        cache.putIfAbsent(subscription.getId(), subscription);
-        return cache.get(subscription.getId());
-    }
 }

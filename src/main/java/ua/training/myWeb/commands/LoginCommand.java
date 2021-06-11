@@ -1,95 +1,74 @@
 package ua.training.myWeb.commands;
 
-import org.apache.log4j.Logger;
 import ua.training.myWeb.Path;
-import ua.training.myWeb.model.dao.UserDao;
-import ua.training.myWeb.model.dao.impl.JDBCDaoFactory;
 import ua.training.myWeb.model.entity.User;
 import ua.training.myWeb.model.entity.enums.Role;
 import ua.training.myWeb.model.entity.enums.UserStatus;
+import ua.training.myWeb.services.ContextService;
+import ua.training.myWeb.services.DatabaseService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class LoginCommand extends Command {
 
 
-    private static final Logger log = Logger.getLogger(LoginCommand.class);
-
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        log.debug("Command starts");
-
         HttpSession session = request.getSession();
-
-        // obtain login and password from the request
         String login = request.getParameter("login");
-        log.trace("Request parameter: loging --> " + login);
-        System.out.println("Request parameter: loging --> " + login);
-
         String password = request.getParameter("password");
-        System.out.println("Request parameter: password --> " + password);
 
         String errorMessage = null;
-        String forward = Path.LOGIN_PAGE;
+        String forward = "";
 
-        if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
-            errorMessage = "Login/password cannot be empty";
-            request.setAttribute("errorMessage", errorMessage);
-            System.err.println("errorMessage --> " + errorMessage);
-            return forward;
+        if (login == null || password == null
+                || login.isEmpty() || password.isEmpty()) {
+            return Path.LOGIN_PAGE;
         }
 
-        UserDao userDao = JDBCDaoFactory.getInstance().createUserDao();
-
-        User user = userDao.findByLogin(login);
-
+        User user = null;
+        DatabaseService databaseService = new DatabaseService();
         try {
-            userDao.close();
+            user = databaseService.findUserByLogin(login);
         } catch (Exception e) {
-            e.printStackTrace();
+            request.getSession().setAttribute("errorMessage", "Error while logging in");
+            forward = "redirect:noCommand";
         }
 
-        System.out.println("Found in DB: user --> " + user);
+        ContextService contextService = new ContextService();
 
         if (user == null || !password.equals(user.getPassword())) {
             errorMessage = "Cannot find user with such login/password";
-
-            request.setAttribute("errorMessage", errorMessage);
-
-            forward = "redirect:login";
+            request.getSession().setAttribute("errorMessage", errorMessage);
+            forward = "redirect:noCommand";
         } else if (user.getStatus() == UserStatus.BLOCKED) {
             errorMessage = "You were blocked go away!";
-
-            request.setAttribute("errorMessage", errorMessage);
-
-            forward = Path.ERROR_PAGE;
-        } else {
+            request.getSession().setAttribute("errorMessage", errorMessage);
+            forward = "redirect:noCommand";
+        } else if (!contextService.isUserLogged(request, user)) {
             Role userRole = user.getRole();
-
-
-            log.trace("userRole --> " + userRole);
             forward = "redirect:profile";
-
             session.setAttribute("user", user);
-            System.out.println("Set the session attribute: user --> " + user);
-
-
             session.setAttribute("userRole", userRole);
-            System.out.println("Set the session attribute: userRole --> " + userRole);
-
-            //forward = CommandContainer.get("profile").execute(request, response);
-            System.out.println("User " + user + " logged as " + userRole.toString().toLowerCase());
-
-
-            // work with i18n
-            //TODO locale
-            session.setAttribute("lang", "ua");
-
+            Object localeMap = request.getSession().getServletContext().getAttribute("userAndLocales");
+            contextService.getLoggedUsersSet(request).add(user.getLogin());
+            if (localeMap instanceof ConcurrentHashMap) {
+                ConcurrentHashMap<String, String> userLocales = (ConcurrentHashMap<String, String>) localeMap;
+                request.getSession().setAttribute("lang", userLocales.get(user.getLogin()));
+            }
+        } else if (contextService.isUserLogged(request, user)) {
+            System.out.println("Does contain");
+            errorMessage = "You ve already logged in!";
+            request.getSession().setAttribute("errorMessage", errorMessage);
+            forward = "redirect:noCommand";
         }
 
         return forward;
     }
+
+
 }

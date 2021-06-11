@@ -15,7 +15,8 @@ public class MainCommand extends Command {
             databaseService.fillMainPage(request);
         } catch (Exception e) {
             e.printStackTrace();
-            return Path.ERROR_PAGE;
+            request.getSession().setAttribute("errorMessage", "Unexpected error");
+            return "redirect:noCommand";
         }
 
 

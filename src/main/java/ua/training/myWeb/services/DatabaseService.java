@@ -12,6 +12,8 @@ import ua.training.myWeb.model.entity.Edition;
 import ua.training.myWeb.model.entity.Subscription;
 import ua.training.myWeb.model.entity.Theme;
 import ua.training.myWeb.model.entity.User;
+import ua.training.myWeb.model.entity.enums.EditionStatus;
+import ua.training.myWeb.model.entity.enums.Role;
 import ua.training.myWeb.model.entity.enums.SubscriptionStatus;
 import ua.training.myWeb.model.entity.enums.UserStatus;
 
@@ -72,16 +74,14 @@ public class DatabaseService {
 
         EditionDao editionDao = new JDBCEditionDao(connection);
         ThemeDao themeDao = new JDBCThemeDao(connection);
-
         List<Theme> themes = themeDao.findAll();
-
         request.setAttribute("themes", themes);
-
 
         long page = 1;
         long recordsPerPage = 6;
-        if (request.getParameter("page") != null)
+        if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
+        }
 
         long noOfRecords = 0;
 
@@ -96,12 +96,17 @@ public class DatabaseService {
                 request.getParameter("sort") != null &&
                 request.getParameter("query") != null) {
             long themeId = Long.parseLong(request.getParameter("themeId"));
-            editionList = Lists.partition(editionDao.findWithOffsetLimitActiveQueryGeneration((page - 1) * recordsPerPage, recordsPerPage,
-                    themeId, request.getParameter("sort"), request.getParameter("query")), 2);
-            noOfRecords = editionDao.countActiveQueryGeneration(themeId, request.getParameter("sort"), request.getParameter("query"));
+            editionList
+                    = Lists.partition(
+                    editionDao.findWithOffsetLimitActiveQueryGeneration((page - 1) * recordsPerPage, recordsPerPage,
+                            themeId, request.getParameter("sort"), request.getParameter("query")), 2);
+            noOfRecords
+                    = editionDao.countActiveQueryGeneration(themeId, request.getParameter("sort"), request.getParameter("query"));
         } else {
             noOfRecords = editionDao.countActive();
-            editionList = Lists.partition(editionDao.findAllWithOffsetLimitActive((page - 1) * recordsPerPage, recordsPerPage), 2);
+            editionList
+                    = Lists.partition(
+                    editionDao.findAllWithOffsetLimitActive((page - 1) * recordsPerPage, recordsPerPage), 2);
         }
         request.setAttribute("editionsList", editionList);
 
@@ -124,35 +129,119 @@ public class DatabaseService {
         return new Date(c.getTime().getTime());
     }
 
-
-    public boolean isUserAllowed(long userId){
-        boolean result = false;
-        UserDao userDao = JDBCDaoFactory.getInstance().createUserDao();
-
-        User user = userDao.findById(userId);
-
-        try {
-            userDao.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void deleteSubscription(long editionId, long subscriptionId, long userId) throws Exception {
+        try (SubscriptionDao subscriptionDao = JDBCDaoFactory.getInstance().createSubscriptionDao()) {
+            Subscription subscription = subscriptionDao.findByUserIdAndEditionId(userId, editionId);
+            if (subscription != null && subscription.getId() == subscriptionId) {
+                subscriptionDao.delete(subscriptionId);
+            }
         }
+    }
 
-        System.out.println("Found in DB: user --> " + user);
-
-        if (user != null && user.getStatus() == UserStatus.ACTIVE) {
-            result =true;
-        } else if (user != null && user.getStatus() == UserStatus.BLOCKED) {
-            result = false;
+    public void createEdition(long themeId, String name, double price, EditionStatus status) throws Exception {
+        try (EditionDao editionDao = JDBCDaoFactory.getInstance().createEditionDao()) {
+            Edition edition = new Edition();
+            edition.setName(name);
+            edition.setPrice(price);
+            edition.setStatus(status);
+            Theme theme = new Theme();
+            theme.setId(themeId);
+            edition.setTheme(theme);
+            editionDao.create(edition);
         }
+    }
 
-        try {
-            userDao.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void createTheme(String name) throws Exception {
+        try (ThemeDao themeDao = JDBCDaoFactory.getInstance().createThemeDao()) {
+            Theme theme = new Theme();
+            theme.setName(name);
+            themeDao.create(theme);
         }
+    }
 
+    public void deleteTheme(long themeId) throws Exception {
+        try (ThemeDao themeDao = JDBCDaoFactory.getInstance().createThemeDao()) {
+            themeDao.delete(themeId);
+        }
+    }
 
-        return result;
+    public void deleteEdition(long userId) throws Exception {
+        try (EditionDao editionDao = JDBCDaoFactory.getInstance().createEditionDao()) {
+            editionDao.delete(userId);
+        }
+    }
+
+    public User findUserByLogin(String login) throws Exception {
+        User user;
+        try (UserDao userDao = JDBCDaoFactory.getInstance().createUserDao()) {
+            user = userDao.findByLogin(login);
+        }
+        return user;
+    }
+
+    public boolean createNewUser(String login, String password) throws Exception {
+        boolean res = true;
+        try (UserDao userDao = JDBCDaoFactory.getInstance().createUserDao()) {
+            if (userDao.findByLogin(login) == null) {
+                User user = new User();
+                user.setLogin(login);
+                user.setPassword(password);
+                user.setAccount(0.);
+                user.setRole(Role.USER);
+                user.setStatus(UserStatus.ACTIVE);
+                userDao.create(user);
+            } else {
+                res = false;
+            }
+        }
+        return res;
+    }
+
+    public void replenishThisUsersAccount(User currentUser, int replenishAmount) throws Exception {
+        try (UserDao userDao = JDBCDaoFactory.getInstance().createUserDao()) {
+            User user = userDao.findById(currentUser.getId());
+            user.setAccount(user.getAccount() + replenishAmount);
+            userDao.update(user);
+            currentUser.setAccount(user.getAccount());
+        }
+    }
+
+    public void updateEdition(long editionId, long themeId, String name, double price, EditionStatus status) throws Exception {
+        try (EditionDao editionDao = JDBCDaoFactory.getInstance().createEditionDao();
+             ThemeDao themeDao = JDBCDaoFactory.getInstance().createThemeDao()) {
+            Edition edition = editionDao.findById(editionId);
+            Theme theme = themeDao.findById(themeId);
+
+            if (edition != null && theme != null) {
+                edition.setName(name);
+                edition.setPrice(price);
+                edition.setStatus(status);
+                edition.setTheme(theme);
+                editionDao.update(edition);
+            }
+        }
+    }
+
+    public void updateTheme(long themeId, String name) throws Exception {
+        try (ThemeDao themeDao = JDBCDaoFactory.getInstance().createThemeDao()) {
+            Theme theme = themeDao.findById(themeId);
+            if (theme != null) {
+                theme.setName(name);
+                themeDao.update(theme);
+            }
+        }
+    }
+
+    public void updateUser(long userId, String login, double account, UserStatus status) throws Exception {
+        try (UserDao userDao = JDBCDaoFactory.getInstance().createUserDao()) {
+            User user = userDao.findById(userId);
+            if (user != null) {
+                user.setLogin(login);
+                user.setAccount(account);
+                user.setStatus(status);
+                userDao.update(user);
+            }
+        }
     }
 
 

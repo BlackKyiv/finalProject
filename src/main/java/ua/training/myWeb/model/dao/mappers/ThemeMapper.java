@@ -18,8 +18,4 @@ public class ThemeMapper implements ObjectMapper<Theme> {
         return theme;
     }
 
-    public static Theme makeUnique(Map<Long, Theme> cache, Theme theme) {
-        cache.putIfAbsent(theme.getId(), theme);
-        return cache.get(theme.getId());
-    }
 }

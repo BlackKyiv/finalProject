@@ -1,10 +1,10 @@
 package ua.training.myWeb.commands;
 
-import ua.training.myWeb.Path;
 import ua.training.myWeb.model.dao.SubscriptionDao;
 import ua.training.myWeb.model.dao.impl.JDBCDaoFactory;
 import ua.training.myWeb.model.entity.Subscription;
 import ua.training.myWeb.model.entity.User;
+import ua.training.myWeb.services.DatabaseService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,8 +14,6 @@ public class CancelSubscriptionCommand extends Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String forward = "redirect:profile";
-        System.out.println("canceling " + request.getParameter("subscriptionId"));
-        System.out.println("canceling " + request.getSession().getAttribute("user"));
         if (request.getParameter("subscriptionId") != null &&
                 request.getParameter("editionId") != null &&
                 request.getSession().getAttribute("user") != null) {
@@ -23,25 +21,21 @@ public class CancelSubscriptionCommand extends Command {
             long editionId = Long.parseLong(request.getParameter("editionId"));
             long subscriptionId = Long.parseLong(request.getParameter("subscriptionId"));
             long userId = ((User) request.getSession().getAttribute("user")).getId();
-            System.out.println(editionId);
 
-            try (SubscriptionDao subscriptionDao = JDBCDaoFactory.getInstance().createSubscriptionDao()) {
-                Subscription subscription = subscriptionDao.findByUserIdAndEditionId(userId, editionId);
-                System.out.println(subscription);
-                if (subscription != null && subscription.getId() == subscriptionId) {
-                    subscriptionDao.delete(subscriptionId);
-
-                } else {
-                    forward = "noCommand";
-                }
-
+            DatabaseService databaseService = new DatabaseService();
+            try {
+                databaseService.deleteSubscription(editionId, subscriptionId, userId);
             } catch (Exception e) {
                 e.printStackTrace();
+                request.getSession().setAttribute("errorMessage", "This subscription doesnt exist");
+                forward = "redirect:noCommand";
             }
         } else {
-            forward = "profile";
+            forward = "redirect:profile";
         }
 
         return forward;
     }
+
+
 }

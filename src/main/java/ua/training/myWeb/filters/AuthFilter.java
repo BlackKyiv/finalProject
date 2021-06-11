@@ -9,6 +9,7 @@ import ua.training.myWeb.services.DatabaseService;
 import ua.training.myWeb.services.FilterService;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,19 +27,6 @@ public class AuthFilter implements Filter {
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
-        if (request.getAttribute("user") != null) {
-            User user = (User) request.getAttribute("user");
-            DatabaseService databaseService = new DatabaseService();
-            if (databaseService.isUserAllowed(user.getId())) {
-                String errorMessasge = "Your account is blocked";
-
-                System.out.println("Access not allowed");
-                request.setAttribute("errorMessage", errorMessasge);
-                log.trace("Set the request attribute: errorMessage --> " + errorMessasge);
-                request.getRequestDispatcher(Path.ERROR_PAGE)
-                        .forward(request, response);
-            }
-        }
 
 
         FilterService filterService = new FilterService();

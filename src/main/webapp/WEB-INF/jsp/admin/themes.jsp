@@ -9,14 +9,14 @@
 <h1><%= "Themes" %>
 </h1>
 <br>
-<h1 class="text-dark" align="center">Themes</h1>
+<h1 class="text-dark" align="center"><fmt:message key="text.themes"/></h1>
 <br>
 
 <form action="controller" class="px-2" align="center">
-    <label>Name: </label>
+    <label><fmt:message key="text.label.theme"/>: </label>
     <input type="text" name="name" value="${theme.name}">
     <label>&nbsp; &nbsp;</label>
-    <input type="submit" value="Create" class="btn btn-success px-2">
+    <input type="submit" value="<fmt:message key="text.button.create"/>" class="btn btn-success px-2">
     <input type="hidden" name="command" value="createTheme">
 </form>
 
@@ -25,16 +25,16 @@
 <c:forEach var="theme" items="${themes}">
     <div class="d-flex justify-content-center">
         <form action="controller" class="px-2">
-            <label>Name: </label>
+            <label><fmt:message key="text.label.theme"/>: </label>
             <input type="text" name="name" value="${theme.name}">
             <label>&nbsp; &nbsp;</label>
-            <input type="submit" value="Update" class="btn btn-primary px-2">
+            <input type="submit" value="<fmt:message key="text.button.update"/>" class="btn btn-primary px-2">
             <input type="hidden" name="command" value="updateTheme">
             <input type="hidden" name="themeId" value="${theme.id}">
         </form>
 
         <form action="controller" class="px-2">
-            <input type="submit" value="Delete" class="btn btn-danger">
+            <input type="submit" value="<fmt:message key="text.button.delete"/>" class="btn btn-danger">
             <input type="hidden" name="command" value="deleteTheme">
             <input type="hidden" name="themeId" value="${theme.id}">
         </form>

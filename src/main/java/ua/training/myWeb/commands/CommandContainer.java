@@ -11,7 +11,6 @@ public class CommandContainer {
     private static Map<String, Command> commands = new TreeMap<String, Command>();
 
     static {
-        // common commands
         commands.put("login", new LoginCommand());
         commands.put("logout", new LogoutCommand());
         commands.put("noCommand", new NoCommand());
@@ -34,8 +33,6 @@ public class CommandContainer {
         commands.put("changeLang", new ChangeLangCommand());
         commands.put("deleteTheme", new DeleteThemeCommand());
 
-        log.debug("Command container was successfully initialized");
-        log.trace("Number of commands --> " + commands.size());
     }
 
     public static Command get(String commandName) {

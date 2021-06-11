@@ -19,15 +19,15 @@
                 </div>
                 <c:if test="${sessionScope.userRole.toString() == 'admin'}">
                     <div class="navbar-nav">
-                        <a href="?command=themes" class="nav-item nav-link">Manage Themes</a>
+                        <a href="?command=themes" class="nav-item nav-link"><fmt:message key="text.button.manage.themes"/></a>
                     </div>
 
                     <div class="navbar-nav">
-                        <a href="?command=editions" class="nav-item nav-link">Manage Editions</a>
+                        <a href="?command=editions" class="nav-item nav-link"><fmt:message key="text.button.manage.editions"/></a>
                     </div>
 
                     <div class="navbar-nav">
-                        <a href="?command=users" class="nav-item nav-link">Manage Users</a>
+                        <a href="?command=users" class="nav-item nav-link"><fmt:message key="text.button.manage.users"/></a>
                     </div>
                 </c:if>
             </div>

@@ -1,8 +1,7 @@
 package ua.training.myWeb.commands;
 
-import ua.training.myWeb.model.dao.SubscriptionDao;
-import ua.training.myWeb.model.dao.impl.JDBCDaoFactory;
-import ua.training.myWeb.model.entity.Subscription;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import ua.training.myWeb.model.entity.User;
 import ua.training.myWeb.services.DatabaseService;
 
@@ -10,9 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class CancelSubscriptionCommand extends Command {
+    private static final Logger logger = LogManager.getLogger(CancelSubscriptionCommand.class);
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        logger.debug("Command starts");
         String forward = "redirect:profile";
         if (request.getParameter("subscriptionId") != null &&
                 request.getParameter("editionId") != null &&
@@ -25,8 +26,9 @@ public class CancelSubscriptionCommand extends Command {
             DatabaseService databaseService = new DatabaseService();
             try {
                 databaseService.deleteSubscription(editionId, subscriptionId, userId);
+                logger.trace("Deleted subscription with id " + subscriptionId);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
                 request.getSession().setAttribute("errorMessage", "This subscription doesnt exist");
                 forward = "redirect:noCommand";
             }
@@ -34,6 +36,7 @@ public class CancelSubscriptionCommand extends Command {
             forward = "redirect:profile";
         }
 
+        logger.debug("Command ends");
         return forward;
     }
 

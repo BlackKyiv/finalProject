@@ -244,5 +244,11 @@ public class DatabaseService {
         }
     }
 
+    public void deleteUser(long userId) throws Exception {
+        try (UserDao userDao = JDBCDaoFactory.getInstance().createUserDao()) {
+            userDao.delete(userId);
+        }
+    }
+
 
 }

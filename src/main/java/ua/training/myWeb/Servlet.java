@@ -1,5 +1,6 @@
 package ua.training.myWeb;
 
+import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import ua.training.myWeb.commands.Command;
 import ua.training.myWeb.commands.CommandContainer;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Servlet extends HttpServlet {
+    final Logger logger = LogManager.getLogger(Servlet.class);
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         process(request, response);
@@ -27,7 +29,7 @@ public class Servlet extends HttpServlet {
         String commandName = request.getParameter("command");
         Command command = CommandContainer.get(commandName);
         String forward = command.execute(request, response);
-
+        logger.trace("Executing command  ----->" + command);
 
         if (forward.contains("redirect:")) {
             response.sendRedirect(
@@ -36,6 +38,8 @@ public class Servlet extends HttpServlet {
             RequestDispatcher disp = request.getRequestDispatcher(forward);
             disp.forward(request, response);
         }
+
+        logger.trace("Command executed ----->" + command);
     }
 
 }

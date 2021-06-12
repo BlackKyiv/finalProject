@@ -9,6 +9,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
@@ -37,8 +38,8 @@ public class DBManager {
 
     public static DBManager getInstance() {
         if (dbManager == null) {
-            log.debug("Created new DBManager");
             dbManager = new DBManager();
+            log.debug("Created new DBManager");
         }
         return dbManager;
     }
@@ -46,6 +47,13 @@ public class DBManager {
     public Connection getConnection() {
 
         try {
+            if(dataSource == null) {
+                Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/finaldb","root","root");
+                connection.setAutoCommit(false);
+                connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+                log.debug("Accessed new connection");
+                return connection;
+            }
             Connection connection = dataSource.getConnection();
             connection.setAutoCommit(false);
             connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);

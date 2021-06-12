@@ -5,10 +5,7 @@ import ua.training.myWeb.model.dao.SubscriptionDao;
 import ua.training.myWeb.model.dao.mappers.SubscriptionMapper;
 import ua.training.myWeb.model.entity.Subscription;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +21,15 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
     @Override
     public void create(Subscription entity) {
         try (PreparedStatement stmt = connection.prepareStatement(
-                MySQLCommands.INSERT_SUBSCRIPTION)) {
+                MySQLCommands.INSERT_SUBSCRIPTION, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setLong(1, entity.getEdition().getId());
             stmt.setLong(2, entity.getUser().getId());
             stmt.setDate(3, entity.getNextPayDay());
             stmt.setString(4, entity.getStatus().toString());
             stmt.executeUpdate();
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+                if (keys != null && keys.next()) entity.setId(keys.getLong(1));
+            }
         } catch (SQLException ex) {
             log.error(ex.getMessage());
         }
@@ -156,7 +156,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
             }
         } catch (SQLException ex) {
             log.error(ex.getMessage());
-            ex.printStackTrace();
+
         }
         return subscriptions;
     }

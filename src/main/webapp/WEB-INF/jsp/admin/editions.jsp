@@ -51,10 +51,10 @@
                 <c:forEach var="theme" items="${themes}">
                     <c:choose>
                         <c:when test="${edition.theme.id == theme.id}">
-                            <option value="${theme.id}" selected>${theme.name}</option>
+                            <op:myOption value="${theme.id}" title="${theme.name}" selected="true"/>
                         </c:when>
                         <c:otherwise>
-                            <option value="${theme.id}">${theme.name}</option>
+                            <op:myOption value="${theme.id}" title="${theme.name}"/>
                         </c:otherwise>
                     </c:choose>
                 </c:forEach>
@@ -63,7 +63,7 @@
             <select id="status" name="status">
                 <c:choose>
                     <c:when test="${edition.getStatus().toString() == 'active'}">
-                        <option value="active" selected><fmt:message key="text.list.active"/></option>
+                        <option value="active" selected disabled><fmt:message key="text.list.active"/></option>
                         <option value="hidden"><fmt:message key="text.list.hidden"/></option>
                     </c:when>
                     <c:otherwise>

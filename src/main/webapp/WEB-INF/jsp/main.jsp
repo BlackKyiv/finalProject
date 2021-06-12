@@ -22,10 +22,10 @@
             <c:forEach var="theme" items="${themes}">
                 <c:choose>
                     <c:when test="${theme.id == themeId}">
-                        <option value="${theme.id}" selected>${theme.name}</option>
+                        <op:myOption value="${theme.id}" title="${theme.name}" selected="true"/>
                     </c:when>
                     <c:otherwise>
-                        <option value="${theme.id}">${theme.name}</option>
+                        <op:myOption value="${theme.id}" title="${theme.name}"/>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>

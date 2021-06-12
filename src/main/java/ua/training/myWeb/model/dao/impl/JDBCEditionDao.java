@@ -1,15 +1,11 @@
 package ua.training.myWeb.model.dao.impl;
 
 import org.apache.log4j.Logger;
-import ua.training.myWeb.filters.AuthFilter;
 import ua.training.myWeb.model.dao.EditionDao;
 import ua.training.myWeb.model.dao.mappers.EditionMapper;
 import ua.training.myWeb.model.entity.Edition;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,12 +21,15 @@ public class JDBCEditionDao implements EditionDao {
     @Override
     public void create(Edition entity) {
         try (PreparedStatement stmt = connection.prepareStatement(
-                MySQLCommands.INSERT_EDITION)) {
+                MySQLCommands.INSERT_EDITION, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, entity.getName());
             stmt.setDouble(2, entity.getPrice());
             stmt.setLong(3, entity.getTheme().getId());
             stmt.setString(4, entity.getStatus().toString());
             stmt.executeUpdate();
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+                if (keys != null && keys.next()) entity.setId(keys.getLong(1));
+            }
         } catch (SQLException ex) {
             log.error(ex.getMessage());
         }
@@ -163,7 +162,7 @@ public class JDBCEditionDao implements EditionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return result;
     }
@@ -217,7 +216,7 @@ public class JDBCEditionDao implements EditionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return result;
     }

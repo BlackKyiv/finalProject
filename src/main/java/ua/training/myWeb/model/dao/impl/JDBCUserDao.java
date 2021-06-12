@@ -30,6 +30,9 @@ public class JDBCUserDao implements UserDao {
             stmt.setDouble(4, entity.getAccount());
             stmt.setString(5, entity.getStatus().toString().toLowerCase());
             stmt.executeUpdate();
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+                if (keys != null && keys.next()) entity.setId(keys.getLong(1));
+            }
         } catch (SQLException ex) {
             log.error(ex.getMessage());
         }

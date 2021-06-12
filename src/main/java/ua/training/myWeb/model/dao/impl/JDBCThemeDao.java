@@ -24,6 +24,9 @@ public class JDBCThemeDao implements ThemeDao {
                 Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, entity.getName());
             stmt.executeUpdate();
+            try (ResultSet keys = stmt.getGeneratedKeys()) {
+                if (keys != null && keys.next()) entity.setId(keys.getLong(1));
+            }
         } catch (SQLException ex) {
             log.error(ex.getMessage());
         }

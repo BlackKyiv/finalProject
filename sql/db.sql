@@ -5,158 +5,86 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema finalDB
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema finalDB
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
-USE `mydb` ;
+CREATE SCHEMA IF NOT EXISTS `finalDB` DEFAULT CHARACTER SET utf8 ;
+USE `finalDB` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`account_status`
+-- Table `finalDB`.`user`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`account_status` (
-                                                       `id` INT NOT NULL AUTO_INCREMENT,
-                                                       `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `idaccount_status_UNIQUE` (`id` ASC) VISIBLE,
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`role`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`role` (
-                                             `id` INT NOT NULL AUTO_INCREMENT,
-                                             `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`account`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`account` (
-                                                `id` INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `finalDB`.`user` (
+                                                `id_user` INT NOT NULL AUTO_INCREMENT,
                                                 `login` VARCHAR(50) NOT NULL,
-    `password` VARCHAR(255) NOT NULL,
-    `account` DOUBLE UNSIGNED NOT NULL,
-    `role_id` INT NOT NULL,
-    `account_status_id` INT NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE,
-    INDEX `fk_account_account_status1_idx` (`account_status_id` ASC) VISIBLE,
-    INDEX `fk_account_role1_idx` (`role_id` ASC) VISIBLE,
-    CONSTRAINT `fk_account_account_status1`
-    FOREIGN KEY (`account_status_id`)
-    REFERENCES `mydb`.`account_status` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `fk_account_role1`
-    FOREIGN KEY (`role_id`)
-    REFERENCES `mydb`.`role` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+                                                `password` VARCHAR(255) NOT NULL,
+                                                `account` DECIMAL(13,2) UNSIGNED NOT NULL,
+                                                `role` VARCHAR(10) NOT NULL,
+                                                `user_status` VARCHAR(20) NOT NULL,
+                                                PRIMARY KEY (`id_user`),
+                                                UNIQUE INDEX `id_UNIQUE` (`id_user` ASC) VISIBLE,
+                                                UNIQUE INDEX `login_UNIQUE` (`login` ASC) VISIBLE)
     ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`theme`
+-- Table `finalDB`.`theme`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`theme` (
-                                              `id` INT NOT NULL AUTO_INCREMENT,
-                                              `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `finalDB`.`theme` (
+                                                 `id_theme` INT NOT NULL AUTO_INCREMENT,
+                                                 `theme` VARCHAR(45) NOT NULL,
+                                                 PRIMARY KEY (`id_theme`),
+                                                 UNIQUE INDEX `id_UNIQUE` (`id_theme` ASC) VISIBLE,
+                                                 UNIQUE INDEX `name_UNIQUE` (`theme` ASC) VISIBLE)
     ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`edition_status`
+-- Table `finalDB`.`edition`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`edition_status` (
-                                                       `id` INT NOT NULL AUTO_INCREMENT,
-                                                       `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
+CREATE TABLE IF NOT EXISTS `finalDB`.`edition` (
+                                                   `id_edition` INT NOT NULL AUTO_INCREMENT,
+                                                   `name` VARCHAR(45) NOT NULL,
+                                                   `price` DECIMAL(13,2) UNSIGNED NOT NULL DEFAULT 0,
+                                                   `edition_status` VARCHAR(10) NOT NULL DEFAULT 1,
+                                                   `theme_id` INT NOT NULL,
+                                                   PRIMARY KEY (`id_edition`),
+                                                   UNIQUE INDEX `id_UNIQUE` (`id_edition` ASC) VISIBLE,
+                                                   INDEX `fk_edition_theme1_idx` (`theme_id` ASC) VISIBLE,
+                                                   CONSTRAINT `fk_edition_theme1`
+                                                       FOREIGN KEY (`theme_id`)
+                                                           REFERENCES `finalDB`.`theme` (`id_theme`)
+                                                           ON DELETE CASCADE
+                                                           ON UPDATE CASCADE)
     ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`edition`
+-- Table `finalDB`.`subscription`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`edition` (
-                                                `id` INT NOT NULL AUTO_INCREMENT,
-                                                `name` VARCHAR(45) NOT NULL,
-    `price` DOUBLE UNSIGNED NOT NULL DEFAULT 0,
-    `theme_id` INT NOT NULL,
-    `edition_status_id` INT NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    INDEX `fk_edition_theme_idx` (`theme_id` ASC) VISIBLE,
-    INDEX `fk_edition_edition_status1_idx` (`edition_status_id` ASC) VISIBLE,
-    CONSTRAINT `fk_edition_theme`
-    FOREIGN KEY (`theme_id`)
-    REFERENCES `mydb`.`theme` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `fk_edition_edition_status1`
-    FOREIGN KEY (`edition_status_id`)
-    REFERENCES `mydb`.`edition_status` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`subscription_status`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`subscription_status` (
-                                                            `id` INT NOT NULL AUTO_INCREMENT,
-                                                            `name` VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE)
-    ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `mydb`.`subscription`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `mydb`.`subscription` (
-                                                     `id` INT NOT NULL AUTO_INCREMENT,
-                                                     `edition_id` INT NOT NULL,
-                                                     `account_id` INT NOT NULL,
-                                                     `next_pay_date` DATETIME NOT NULL,
-                                                     `subscription_status_id` INT NOT NULL,
-                                                     PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    INDEX `fk_subscription_edition1_idx` (`edition_id` ASC) VISIBLE,
-    INDEX `fk_subscription_account1_idx` (`account_id` ASC) VISIBLE,
-    INDEX `fk_subscription_subscription_status1_idx` (`subscription_status_id` ASC) VISIBLE,
-    CONSTRAINT `fk_subscription_edition1`
-    FOREIGN KEY (`edition_id`)
-    REFERENCES `mydb`.`edition` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `fk_subscription_account1`
-    FOREIGN KEY (`account_id`)
-    REFERENCES `mydb`.`account` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-    CONSTRAINT `fk_subscription_subscription_status1`
-    FOREIGN KEY (`subscription_status_id`)
-    REFERENCES `mydb`.`subscription_status` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+CREATE TABLE IF NOT EXISTS `finalDB`.`subscription` (
+                                                        `id_subscription` INT NOT NULL AUTO_INCREMENT,
+                                                        `next_pay_date` DATE NOT NULL,
+                                                        `subscription_status` VARCHAR(15) NOT NULL,
+                                                        `user_id` INT NOT NULL,
+                                                        `edition_id` INT NOT NULL,
+                                                        PRIMARY KEY (`id_subscription`),
+                                                        UNIQUE INDEX `id_subscription_UNIQUE` (`id_subscription` ASC) VISIBLE,
+                                                        INDEX `fk_subscription_user_idx` (`user_id` ASC) VISIBLE,
+                                                        INDEX `fk_subscription_edition1_idx` (`edition_id` ASC) VISIBLE,
+                                                        CONSTRAINT `fk_subscription_user`
+                                                            FOREIGN KEY (`user_id`)
+                                                                REFERENCES `finalDB`.`user` (`id_user`)
+                                                                ON DELETE CASCADE
+                                                                ON UPDATE CASCADE,
+                                                        CONSTRAINT `fk_subscription_edition1`
+                                                            FOREIGN KEY (`edition_id`)
+                                                                REFERENCES `finalDB`.`edition` (`id_edition`)
+                                                                ON DELETE CASCADE
+                                                                ON UPDATE CASCADE)
     ENGINE = InnoDB;
 
 

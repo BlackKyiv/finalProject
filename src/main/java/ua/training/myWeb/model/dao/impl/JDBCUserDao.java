@@ -1,5 +1,6 @@
 package ua.training.myWeb.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import ua.training.myWeb.model.dao.UserDao;
 import ua.training.myWeb.model.dao.mappers.UserMapper;
 import ua.training.myWeb.model.entity.User;
@@ -10,7 +11,9 @@ import java.util.List;
 import java.util.Locale;
 
 public class JDBCUserDao implements UserDao {
-    private Connection connection;
+
+    private static final Logger log = Logger.getLogger(JDBCUserDao.class);
+    private final Connection connection;
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
@@ -28,7 +31,7 @@ public class JDBCUserDao implements UserDao {
             stmt.setString(5, entity.getStatus().toString().toLowerCase());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 
@@ -45,7 +48,7 @@ public class JDBCUserDao implements UserDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return user;
     }
@@ -64,7 +67,7 @@ public class JDBCUserDao implements UserDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return users;
     }
@@ -82,7 +85,7 @@ public class JDBCUserDao implements UserDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return user;
     }
@@ -99,7 +102,7 @@ public class JDBCUserDao implements UserDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return users;
     }
@@ -115,7 +118,7 @@ public class JDBCUserDao implements UserDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return result;
     }
@@ -132,7 +135,7 @@ public class JDBCUserDao implements UserDao {
             stmt.setLong(6, entity.getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 
@@ -143,7 +146,7 @@ public class JDBCUserDao implements UserDao {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 

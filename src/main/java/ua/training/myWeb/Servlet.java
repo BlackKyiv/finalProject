@@ -28,13 +28,15 @@ public class Servlet extends HttpServlet {
 
         String commandName = request.getParameter("command");
         Command command = CommandContainer.get(commandName);
-        String forward = command.execute(request, response);
         logger.trace("Executing command  ----->" + command);
+        String forward = command.execute(request, response);
 
         if (forward.contains("redirect:")) {
+            logger.trace("Redirecting to " + request.getContextPath() + "/controller?command=" + forward.replaceAll("redirect:", ""));
             response.sendRedirect(
                     request.getContextPath() + "/controller?command=" + forward.replaceAll("redirect:", ""));
         } else {
+            logger.trace("Forward to " + forward);
             RequestDispatcher disp = request.getRequestDispatcher(forward);
             disp.forward(request, response);
         }

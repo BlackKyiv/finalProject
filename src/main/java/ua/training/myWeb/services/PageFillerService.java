@@ -10,7 +10,6 @@ import ua.training.myWeb.model.entity.Edition;
 import ua.training.myWeb.model.entity.Subscription;
 import ua.training.myWeb.model.entity.Theme;
 import ua.training.myWeb.model.entity.User;
-import ua.training.myWeb.model.entity.enums.EditionStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -38,20 +37,20 @@ public class PageFillerService {
         try (SubscriptionDao subscriptionDao = JDBCDaoFactory.getInstance().createSubscriptionDao()) {
             long page = 1;
             long recordsPerPage = 4;
-            if (request.getParameter("page") != null)
+            if (request.getParameter("page") != null) {
                 page = Integer.parseInt(request.getParameter("page"));
+            }
 
             List<List<Subscription>> subscriptionList = Lists.partition(
-                    subscriptionDao.findByUserIdOffsetAndLimit(user.getId(), (page - 1) * recordsPerPage, recordsPerPage), 2);
+                    subscriptionDao.findByUserIdOffsetAndLimit(user.getId(),
+                            (page - 1) * recordsPerPage, recordsPerPage), 2);
 
             request.setAttribute("subscriptionList", subscriptionList);
-
             long noOfRecords = subscriptionDao.countUser(user.getId());
             long noOfPages = (long) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
 
             request.setAttribute("noOfPages", noOfPages);
             request.setAttribute("currentPage", page);
-
         }
     }
 

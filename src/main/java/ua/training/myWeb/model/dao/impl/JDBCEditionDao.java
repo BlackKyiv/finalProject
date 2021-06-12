@@ -1,5 +1,7 @@
 package ua.training.myWeb.model.dao.impl;
 
+import org.apache.log4j.Logger;
+import ua.training.myWeb.filters.AuthFilter;
 import ua.training.myWeb.model.dao.EditionDao;
 import ua.training.myWeb.model.dao.mappers.EditionMapper;
 import ua.training.myWeb.model.entity.Edition;
@@ -13,6 +15,8 @@ import java.util.List;
 
 public class JDBCEditionDao implements EditionDao {
     private final Connection connection;
+
+    private static final Logger log = Logger.getLogger(JDBCEditionDao.class);
 
     public JDBCEditionDao(Connection connection) {
         this.connection = connection;
@@ -28,7 +32,7 @@ public class JDBCEditionDao implements EditionDao {
             stmt.setString(4, entity.getStatus().toString());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 
@@ -45,7 +49,7 @@ public class JDBCEditionDao implements EditionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return edition;
     }
@@ -61,7 +65,7 @@ public class JDBCEditionDao implements EditionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return editions;
     }
@@ -80,7 +84,7 @@ public class JDBCEditionDao implements EditionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return editions;
     }
@@ -99,7 +103,7 @@ public class JDBCEditionDao implements EditionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return editions;
     }
@@ -127,11 +131,7 @@ public class JDBCEditionDao implements EditionDao {
         } else {
             sb.append("ORDER BY name ");
         }
-
-
         sb.append("LIMIT ?, ? ");
-        System.out.println(sb.toString());
-
         try {
             try (PreparedStatement stmt = connection.prepareStatement(
                     sb.toString())) {
@@ -146,7 +146,7 @@ public class JDBCEditionDao implements EditionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return editions;
     }
@@ -190,7 +190,6 @@ public class JDBCEditionDao implements EditionDao {
         } else {
             sb.append("ORDER BY name ");
         }
-        System.out.println(sb.toString());
 
         try {
             try (PreparedStatement stmt = connection.prepareStatement(
@@ -202,7 +201,7 @@ public class JDBCEditionDao implements EditionDao {
                 if (rs.next()) result = rs.getLong("number");
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return result;
     }
@@ -234,7 +233,7 @@ public class JDBCEditionDao implements EditionDao {
             stmt.setLong(5, entity.getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 
@@ -245,7 +244,7 @@ public class JDBCEditionDao implements EditionDao {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 

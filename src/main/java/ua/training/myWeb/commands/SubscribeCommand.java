@@ -24,7 +24,7 @@ public class SubscribeCommand extends Command {
                 logger.trace("Created subscription");
             } catch (Exception e) {
                 logger.error(e.getMessage());
-                request.setAttribute("errorMessage", "DB error");
+                request.getSession().setAttribute("errorMessage", "DB error");
                 forward = "redirect:noCommand";
             }
         }

@@ -1,5 +1,6 @@
 package ua.training.myWeb.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import ua.training.myWeb.model.dao.SubscriptionDao;
 import ua.training.myWeb.model.dao.mappers.SubscriptionMapper;
 import ua.training.myWeb.model.entity.Subscription;
@@ -13,6 +14,7 @@ import java.util.List;
 
 public class JDBCSubscriptionDao implements SubscriptionDao {
 
+    private static final Logger log = Logger.getLogger(JDBCSubscriptionDao.class);
     private final Connection connection;
 
     public JDBCSubscriptionDao(Connection connection) {
@@ -29,7 +31,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
             stmt.setString(4, entity.getStatus().toString());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
 
     }
@@ -45,7 +47,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return result;
     }
@@ -63,7 +65,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return subscription;
     }
@@ -80,7 +82,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return subscriptions;
     }
@@ -96,7 +98,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
             stmt.setLong(5, entity.getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 
@@ -107,7 +109,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 
@@ -131,7 +133,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return subscription;
     }
@@ -147,10 +149,13 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
                 stmt.setLong(2, offset);
                 stmt.setLong(3, limit);
                 try (ResultSet rs = stmt.executeQuery()) {
-                    while (rs.next()) subscriptions.add(mapper.extractFromResultSet(rs));
+                    while (rs.next()) {
+                        subscriptions.add(mapper.extractFromResultSet(rs));
+                    }
                 }
             }
         } catch (SQLException ex) {
+            log.error(ex.getMessage());
             ex.printStackTrace();
         }
         return subscriptions;
@@ -168,7 +173,7 @@ public class JDBCSubscriptionDao implements SubscriptionDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return result;
     }

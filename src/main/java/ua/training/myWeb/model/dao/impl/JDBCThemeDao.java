@@ -1,5 +1,6 @@
 package ua.training.myWeb.model.dao.impl;
 
+import org.apache.log4j.Logger;
 import ua.training.myWeb.model.dao.ThemeDao;
 import ua.training.myWeb.model.dao.mappers.ThemeMapper;
 import ua.training.myWeb.model.entity.Theme;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JDBCThemeDao implements ThemeDao {
+    private static final Logger log = Logger.getLogger(JDBCThemeDao.class);
     private final Connection connection;
 
     public JDBCThemeDao(Connection connection) {
@@ -23,7 +25,7 @@ public class JDBCThemeDao implements ThemeDao {
             stmt.setString(1, entity.getName());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 
@@ -38,7 +40,7 @@ public class JDBCThemeDao implements ThemeDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return result;
     }
@@ -57,7 +59,7 @@ public class JDBCThemeDao implements ThemeDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return theme;
     }
@@ -74,7 +76,7 @@ public class JDBCThemeDao implements ThemeDao {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
         return themes;
     }
@@ -87,7 +89,7 @@ public class JDBCThemeDao implements ThemeDao {
             stmt.setLong(2, entity.getId());
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 
@@ -98,7 +100,7 @@ public class JDBCThemeDao implements ThemeDao {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            log.error(ex.getMessage());
         }
     }
 

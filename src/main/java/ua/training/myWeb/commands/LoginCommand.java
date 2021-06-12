@@ -73,7 +73,6 @@ public class LoginCommand extends Command {
                 logger.trace("Found user's locale and set" + userLocales.get(user.getLogin()));
             }
         } else if (contextService.isUserLogged(request, user)) {
-            System.out.println("Does contain");
             errorMessage = "You ve already logged in!";
             request.getSession().setAttribute("errorMessage", errorMessage);
             forward = "redirect:noCommand";

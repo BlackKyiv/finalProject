@@ -7,6 +7,7 @@ import ua.training.myWeb.model.entity.enums.Role;
 import ua.training.myWeb.services.FilterService;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,13 +26,15 @@ public class AuthFilter implements Filter {
         log.debug("Filter started");
         FilterService filterService = new FilterService();
 
+        HttpServletRequest req = (HttpServletRequest) request;
+
         if (filterService.accessAllowed(request, commons, outOfControl, accessMap)) {
             log.trace("This user is allowed to " + request.getParameter("command"));
             chain.doFilter(request, response);
         } else {
             String errorMessage = "You do not have permission to access the requested resource";
             log.trace("This user is not allowed to " + request.getParameter("command"));
-            request.setAttribute("errorMessage", errorMessage);
+            req.getSession().setAttribute("errorMessage", errorMessage);
             log.trace("Set the request attribute: errorMessage --> " + errorMessage);
             request.getRequestDispatcher(Path.ERROR_PAGE)
                     .forward(request, response);

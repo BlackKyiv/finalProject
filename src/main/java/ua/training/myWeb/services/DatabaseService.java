@@ -54,11 +54,11 @@ public class DatabaseService {
                 request.getSession().setAttribute("user", user);
                 request.getSession().setAttribute("userRole", user.getRole());
             } else {
-                request.setAttribute("errorMessage", "Not enough money on account");
+                request.getSession().setAttribute("errorMessage", "Not enough money on account");
                 forward = Path.ERROR_PAGE;
             }
         } else {
-            request.setAttribute("errorMessage", "You have already subscribed");
+            request.getSession().setAttribute("errorMessage", "You have already subscribed");
             forward = Path.ERROR_PAGE;
         }
 

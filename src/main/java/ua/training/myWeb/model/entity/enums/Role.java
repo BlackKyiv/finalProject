@@ -28,7 +28,6 @@ public enum Role {
     }
 
     public String toString() {
-        System.out.println(this.name().toLowerCase(Locale.ROOT));
         return this.name().toLowerCase(Locale.ROOT);
     }
 

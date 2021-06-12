@@ -28,8 +28,6 @@ public class FilterService {
         String commandName = request.getParameter("command");
 
 
-        System.out.println(commandName);
-
         if (commandName == null || commandName.isEmpty()) {
             return false;
         }

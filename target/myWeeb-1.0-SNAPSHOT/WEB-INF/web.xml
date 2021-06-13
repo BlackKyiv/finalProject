@@ -5,6 +5,7 @@
          version="4.0">
 
 
+    <!--  Db settings  -->
     <resource-ref>
         <description>DB Connection</description>
         <res-ref-name>jdbc/editions</res-ref-name>
@@ -12,6 +13,7 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+    <!-- Listeners -->
     <listener>
         <listener-class>ua.training.myWeb.listeners.ContextListener</listener-class>
     </listener>
@@ -51,7 +53,9 @@
 
         <init-param>
             <param-name>admin</param-name>
-            <param-value>users blockUser deleteUser updateUser editions updateEdition deleteEdition createEdition themes updateTheme deleteTheme createTheme</param-value>
+            <param-value>users blockUser deleteUser updateUser editions updateEdition deleteEdition createEdition themes
+                updateTheme deleteTheme createTheme
+            </param-value>
         </init-param>
         <init-param>
             <param-name>user</param-name>
@@ -80,6 +84,7 @@
         <servlet-name>MainServlet</servlet-name>
     </filter-mapping>
 
+    <!--  Error page mappings  -->
     <error-page>
         <exception-type>java.lang.Throwable</exception-type>
         <location>/WEB-INF/jsp/error.jsp</location>

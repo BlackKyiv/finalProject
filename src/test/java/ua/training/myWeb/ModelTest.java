@@ -43,7 +43,7 @@ public class ModelTest {
         }
         checkEdition(edition1);
         Assertions.assertNotNull(editionList);
-        for(Edition ed : editionList){
+        for (Edition ed : editionList) {
             checkEdition(ed);
         }
         Assertions.assertEquals(editionList.size(), count);
@@ -101,7 +101,7 @@ public class ModelTest {
         }
         checkUser(user1);
         Assertions.assertNotNull(userList);
-        for(User u : userList){
+        for (User u : userList) {
             checkUser(u);
         }
         Assertions.assertEquals(userList.size(), count);
@@ -156,7 +156,7 @@ public class ModelTest {
         }
         checkTheme(theme1);
         Assertions.assertNotNull(themeList);
-        for(Theme t : themeList){
+        for (Theme t : themeList) {
             checkTheme(t);
         }
         Assertions.assertEquals(themeList.size(), count);
@@ -212,7 +212,7 @@ public class ModelTest {
         }
         checkSubscription(subscription1);
         Assertions.assertNotNull(subscriptionList);
-        for(Subscription t : subscriptionList){
+        for (Subscription t : subscriptionList) {
             checkSubscription(t);
         }
         Assertions.assertEquals(subscriptionList.size(), count);

@@ -13,6 +13,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
+/**
+ * DB manager. Works with MySQL DB.
+ * Only the required DAO methods are defined!
+ *
+ *
+ */
 public class DBManager {
 
     private static DataSource dataSource;
@@ -44,6 +50,13 @@ public class DBManager {
         return dbManager;
     }
 
+    /**
+     * Returns a DB connection from the Pool Connections. Before using this
+     * method you must configure the Date Source and the Connections Pool in your
+     * WEB_APP_ROOT/META-INF/context.xml file.
+     *
+     * @return A DB connection.
+     */
     public Connection getConnection() {
 
         try {

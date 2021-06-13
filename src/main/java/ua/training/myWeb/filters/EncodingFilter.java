@@ -4,7 +4,11 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import java.io.IOException;
-
+/**
+ * Encoding filter.
+ *
+ *
+ */
 public class EncodingFilter implements Filter {
 
     private static final Logger log = Logger.getLogger(AuthFilter.class);

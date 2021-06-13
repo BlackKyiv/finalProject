@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Mapper for user
+ */
 public class UserMapper implements ObjectMapper<User> {
 
     @Override

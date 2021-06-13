@@ -9,6 +9,11 @@ import ua.training.myWeb.services.DatabaseService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Update user command.
+ *
+ *
+ */
 public class UpdateUserCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(UpdateUserCommand.class);

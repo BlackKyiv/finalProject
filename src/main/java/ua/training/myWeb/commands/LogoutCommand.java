@@ -7,6 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
+/**
+ * Logout command.
+ *
+ *
+ */
 public class LogoutCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(LogoutCommand.class);

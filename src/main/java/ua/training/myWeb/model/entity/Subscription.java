@@ -6,6 +6,11 @@ import ua.training.myWeb.model.entity.enums.SubscriptionStatus;
 import java.sql.Date;
 
 
+/**
+ * Subscription entity.
+ *
+ *
+ */
 public class Subscription extends Entity {
 
     private Edition edition;

@@ -84,7 +84,8 @@
                             <div class="p-2">
                                 <div class="text-dark py-xl-2">
                                     <div class="row"><b><h5>${edition.name}</h5></b></div>
-                                    <div class="row"><b><h6>${edition.price}$ <fmt:message key="text.label.perMonth"/></h6></b></div>
+                                    <div class="row"><b><h6>${edition.price}$ <fmt:message
+                                            key="text.label.perMonth"/></h6></b></div>
                                     <div class="row"><b><h6>${edition.theme.name}</h6></b></div>
                                 </div>
                             </div>
@@ -98,7 +99,8 @@
                                                                                        value="subscribe"></c:if>
                                     <c:if test="${empty sessionScope.user}"><input type="hidden" name="command"
                                                                                    value="login"></c:if>
-                                    <input type="submit" class="btn btn-info" value="<fmt:message key="text.button.subscribe"/>"
+                                    <input type="submit" class="btn btn-info"
+                                           value="<fmt:message key="text.button.subscribe"/>"
                                            onclick="return confirm('Are you sure you want to subscribe to '+'${edition.name}'+'?')">
                                 </form>
 
@@ -117,7 +119,9 @@
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <c:if test="${currentPage != 1}">
-                    <td><a href="?command=main&page=${currentPage - 1}&themeId=${themeId}&sort=${sort}&query=${query}"><fmt:message key="text.button.previous"/></a>
+                    <td>
+                        <a href="?command=main&page=${currentPage - 1}&themeId=${themeId}&sort=${sort}&query=${query}"><fmt:message
+                                key="text.button.previous"/></a>
                     </td>
                 </c:if>
                 <c:forEach begin="1" end="${noOfPages}" var="i">
@@ -133,7 +137,9 @@
                     </c:choose>
                 </c:forEach>
                 <c:if test="${currentPage lt noOfPages}">
-                    <td><a href="?command=main&page=${currentPage + 1}&themeId=${themeId}&sort=${sort}&query=${query}"><fmt:message key="text.button.next"/></a>
+                    <td>
+                        <a href="?command=main&page=${currentPage + 1}&themeId=${themeId}&sort=${sort}&query=${query}"><fmt:message
+                                key="text.button.next"/></a>
                     </td>
                 </c:if>
             </tr>

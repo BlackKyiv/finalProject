@@ -14,9 +14,6 @@
 <h1 class="text-dark" align="center"><fmt:message key="text.users"/></h1>
 <br>
 
-
-
-
 <c:forEach var="user" items="${users}">
     <div class="d-flex justify-content-center">
 
@@ -63,7 +60,8 @@
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <c:if test="${currentPage != 1}">
-                    <td><a href="?command=users&page=${currentPage - 1}"><fmt:message key="text.button.previous"/></a></td>
+                    <td><a href="?command=users&page=${currentPage - 1}"><fmt:message key="text.button.previous"/></a>
+                    </td>
                 </c:if>
                 <c:forEach begin="1" end="${noOfPages}" var="i">
                     <c:choose>

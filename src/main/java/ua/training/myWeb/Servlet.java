@@ -12,6 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Main servlet controller.
+ *
+ *
+ */
 public class Servlet extends HttpServlet {
     final Logger logger = LogManager.getLogger(Servlet.class);
 
@@ -24,6 +29,9 @@ public class Servlet extends HttpServlet {
     }
 
 
+    /**
+     * Main method of this controller.
+     */
     private void process(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         String commandName = request.getParameter("command");

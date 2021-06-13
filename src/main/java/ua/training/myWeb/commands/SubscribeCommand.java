@@ -8,6 +8,11 @@ import ua.training.myWeb.services.DatabaseService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Subscribe to edition command.
+ *
+ *
+ */
 public class SubscribeCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(SubscribeCommand.class);

@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+
+/**
+ * List of themes command.
+ *
+ *
+ */
 public class ThemesCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(ThemesCommand.class);

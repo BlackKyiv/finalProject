@@ -10,6 +10,9 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Mapper for subscription
+ */
 public class SubscriptionMapper implements ObjectMapper<Subscription>{
 
     @Override

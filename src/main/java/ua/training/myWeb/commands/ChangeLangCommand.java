@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Change language command.
+ *
+ *
+ */
 public class ChangeLangCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(ChangeLangCommand.class);

@@ -9,6 +9,11 @@ import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.util.Set;
 
+/**
+ * Listener for session destroying
+ *
+ *
+ */
 public class SessionDestroyerListener implements HttpSessionListener {
 
     private static final Logger log = Logger.getLogger(SessionDestroyerListener.class);

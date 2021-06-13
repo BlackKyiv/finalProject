@@ -1,5 +1,9 @@
 package ua.training.myWeb;
 
+/**
+ * Path holder (jsp pages, controller commands).
+ *
+ */
 public class Path {
     public static final String ERROR_PAGE = "WEB-INF/jsp/error.jsp";
     public static final String LOGIN_PAGE = "WEB-INF/jsp/login.jsp";

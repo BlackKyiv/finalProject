@@ -2,6 +2,11 @@ package ua.training.myWeb.model.entity.enums;
 
 import java.util.Locale;
 
+/**
+ * Subscription status parameter entity.
+ *
+ *
+ */
 public enum SubscriptionStatus {
 
     ACTIVE(1), PAUSED(2), CANCELED(3);

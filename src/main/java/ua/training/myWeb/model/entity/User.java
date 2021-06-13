@@ -4,6 +4,12 @@ package ua.training.myWeb.model.entity;
 import ua.training.myWeb.model.entity.enums.Role;
 import ua.training.myWeb.model.entity.enums.UserStatus;
 
+
+/**
+ * User entity.
+ *
+ *
+ */
 public class User extends Entity {
 
     private String login;

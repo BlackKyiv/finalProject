@@ -9,6 +9,11 @@ import ua.training.myWeb.services.PageFillerService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Profile command.
+ *
+ *
+ */
 public class ProfileCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(ProfileCommand.class);

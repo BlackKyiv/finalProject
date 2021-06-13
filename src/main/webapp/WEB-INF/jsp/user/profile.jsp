@@ -28,9 +28,12 @@
                     </div>
                     <div class="p-2">
                         <div class="text-profile py-xl-2">
-                            <div class="row"><h5 class="text-profile"><b><fmt:message key="text.login"/>:</b> ${user.login}</h5></div>
-                            <div class="row"><h5 class="text-profile"><b><fmt:message key="text.profile.role"/>:</b> ${user.role.toString()} </h5></div>
-                            <div class="row"><h5 class="text-profile"><b><fmt:message key="text.profile.account"/>:</b> ${user.account} $ </h5></div>
+                            <div class="row"><h5 class="text-profile"><b><fmt:message
+                                    key="text.login"/>:</b> ${user.login}</h5></div>
+                            <div class="row"><h5 class="text-profile"><b><fmt:message
+                                    key="text.profile.role"/>:</b> ${user.role.toString()} </h5></div>
+                            <div class="row"><h5 class="text-profile"><b><fmt:message
+                                    key="text.profile.account"/>:</b> ${user.account} $ </h5></div>
                         </div>
                     </div>
                 </div>
@@ -53,7 +56,8 @@
                             <div class="p-2">
                                 <div class="text-dark py-xl-2">
                                     <div class="row"><b><h5>${subscription.edition.name}</h5></b></div>
-                                    <div class="row"><b><h6>${subscription.edition.price}$ <fmt:message key="text.label.perMonth"/></h6></b></div>
+                                    <div class="row"><b><h6>${subscription.edition.price}$ <fmt:message
+                                            key="text.label.perMonth"/></h6></b></div>
                                     <div class="row"><b><h6>${subscription.edition.theme.name}</h6></b></div>
                                 </div>
                             </div>
@@ -63,7 +67,8 @@
                                     <input type="hidden" name="subscriptionId" value="${subscription.id}">
                                     <input type="hidden" name="editionId" value="${subscription.edition.id}">
                                     <input type="hidden" name="command" value="cancelSubscription">
-                                    <input type="submit" class="btn btn-danger" value="<fmt:message key="text.button.cancel"/>"
+                                    <input type="submit" class="btn btn-danger"
+                                           value="<fmt:message key="text.button.cancel"/>"
                                            onclick="return confirm('Are you sure you want to cancel subscription '+'${subscription.edition.name}'+'?')">
                                 </form>
 
@@ -83,7 +88,8 @@
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <c:if test="${currentPage != 1}">
-                    <td><a href="?command=profile&page=${currentPage - 1}"><fmt:message key="text.button.previous"/></a></td>
+                    <td><a href="?command=profile&page=${currentPage - 1}"><fmt:message key="text.button.previous"/></a>
+                    </td>
                 </c:if>
 
                 <c:forEach begin="1" end="${noOfPages}" var="i">
@@ -98,9 +104,9 @@
                 </c:forEach>
 
 
-                    <%--For displaying Next link --%>
                 <c:if test="${currentPage lt noOfPages}">
-                    <td><a href="?command=profile&page=${currentPage + 1}"><fmt:message key="text.button.next"/></a></td>
+                    <td><a href="?command=profile&page=${currentPage + 1}"><fmt:message key="text.button.next"/></a>
+                    </td>
                 </c:if>
             </tr>
         </table>

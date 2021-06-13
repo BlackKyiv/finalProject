@@ -1,5 +1,10 @@
 package ua.training.myWeb.model.entity;
 
+/**
+ * Theme entity.
+ *
+ *
+ */
 public class Theme extends Entity {
 
     private String name;

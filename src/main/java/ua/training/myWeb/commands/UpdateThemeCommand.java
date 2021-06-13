@@ -7,6 +7,11 @@ import ua.training.myWeb.services.DatabaseService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Update theme command.
+ *
+ *
+ */
 public class UpdateThemeCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(UpdateThemeCommand.class);

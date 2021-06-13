@@ -2,6 +2,11 @@ package ua.training.myWeb.model.entity.enums;
 
 import java.util.Locale;
 
+/**
+ * Edition status parameter entity.
+ *
+ *
+ */
 public enum EditionStatus {
     ACTIVE(1), HIDDEN(2), DELETED(3);
 

@@ -8,6 +8,11 @@ import ua.training.myWeb.services.DatabaseService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Create edition command.
+ *
+ *
+ */
 public class CreateEditionCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(CreateEditionCommand.class);

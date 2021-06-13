@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Security filter.
+ * Restricts access to pages for unauthorized users
+ *
+ */
 public class AuthFilter implements Filter {
 
     private static final Logger log = Logger.getLogger(AuthFilter.class);

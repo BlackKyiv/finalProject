@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${sessionScope.lang}"/>
-<fmt:setBundle basename="text" />
+<fmt:setBundle basename="text"/>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <a href="controller?command=main" class="navbar-brand"><fmt:message key="text.button.edition"/></a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -12,22 +12,26 @@
         <c:when test="${not empty sessionScope.user}">
             <div id="navbarCollapse" class="collapse navbar-collapse align-content-start">
                 <div class="navbar-nav">
-                    <a href="controller?command=replenish" class="nav-item nav-link"><fmt:message key="text.button.replenish"/></a>
+                    <a href="controller?command=replenish" class="nav-item nav-link"><fmt:message
+                            key="text.button.replenish"/></a>
                 </div>
                 <div class="navbar-nav">
                     <a href="?command=profile" class="nav-item nav-link"><fmt:message key="text.button.profile"/></a>
                 </div>
                 <c:if test="${sessionScope.userRole.toString() == 'admin'}">
                     <div class="navbar-nav">
-                        <a href="?command=themes" class="nav-item nav-link"><fmt:message key="text.button.manage.themes"/></a>
+                        <a href="?command=themes" class="nav-item nav-link"><fmt:message
+                                key="text.button.manage.themes"/></a>
                     </div>
 
                     <div class="navbar-nav">
-                        <a href="?command=editions" class="nav-item nav-link"><fmt:message key="text.button.manage.editions"/></a>
+                        <a href="?command=editions" class="nav-item nav-link"><fmt:message
+                                key="text.button.manage.editions"/></a>
                     </div>
 
                     <div class="navbar-nav">
-                        <a href="?command=users" class="nav-item nav-link"><fmt:message key="text.button.manage.users"/></a>
+                        <a href="?command=users" class="nav-item nav-link"><fmt:message
+                                key="text.button.manage.users"/></a>
                     </div>
                 </c:if>
             </div>
@@ -69,7 +73,6 @@
                 <input type="hidden" name="lang" value="ua">
                 <input type="submit" value="Ua" class="btn btn-secondary">
             </form>
-
 
 
             <form method="get" action="controller" class="align-self-end px-1">

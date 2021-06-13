@@ -1,11 +1,13 @@
 package ua.training.myWeb.tags;
 
-import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 import javax.servlet.jsp.tagext.SimpleTagSupport;
 import java.io.IOException;
 
+/**
+ * Tag for selected/non selected options creation in choose forms
+ */
 public class OptionTag extends SimpleTagSupport {
 
     private String value = "";
@@ -24,7 +26,7 @@ public class OptionTag extends SimpleTagSupport {
         this.value = value;
     }
 
-    public void doTag() throws JspException {
+    public void doTag() {
         PageContext pageContext = (PageContext) getJspContext();
         JspWriter out = pageContext.getOut();
         try {

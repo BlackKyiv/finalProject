@@ -10,7 +10,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+
+/**
+ * Services for actions associated with filters
+ */
 public class FilterService {
+    /**
+     * @param str String to split and create list
+     * @return List of string spliced from str
+     */
     public List<String> asList(String str) {
         List<String> list = new ArrayList<>();
         StringTokenizer st = new StringTokenizer(str);
@@ -20,6 +28,14 @@ public class FilterService {
         return list;
     }
 
+
+    /**
+     * @param request      with data
+     * @param commons      list of common commands
+     * @param outOfControl list of free to use commands
+     * @param accessMap    map of user allowances
+     * @return boolean if accessed of this user allowed
+     */
     public boolean accessAllowed(ServletRequest request, List<String> commons,
                                  List<String> outOfControl,
                                  Map<Role, List<String>> accessMap) {

@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="ua">
 <head>
-<%@ include file="/WEB-INF/jspf/head.jspf" %>
+    <%@ include file="/WEB-INF/jspf/head.jspf" %>
 </head>
 <body>
 <%@ include file="/WEB-INF/jspf/simple-nav.jspf" %>
@@ -17,17 +17,19 @@
         </div>
 
         <div class="form-group">
-            <input type="text" name="login" id="form1Example1" class="form-control" placeholder="<fmt:message key="text.placeholder.login"/>"
+            <input type="text" name="login" id="form1Example1" class="form-control"
+                   placeholder="<fmt:message key="text.placeholder.login"/>"
                    required/>
         </div>
 
 
         <div class="form-group">
-            <input type="password" name="password" class="form-control" placeholder="<fmt:message key="text.placeholder.password"/>"
+            <input type="password" name="password" class="form-control"
+                   placeholder="<fmt:message key="text.placeholder.password"/>"
                    required/>
         </div>
         <div class="text-center">
-            <input type="submit"  value="<fmt:message key="text.button.login"/>" id="submit" class="btn btn-primary">
+            <input type="submit" value="<fmt:message key="text.button.login"/>" id="submit" class="btn btn-primary">
         </div>
     </form>
 </div>

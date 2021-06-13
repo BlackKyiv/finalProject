@@ -2,6 +2,11 @@ package ua.training.myWeb.model.entity.enums;
 
 import java.util.Locale;
 
+/**
+ * Role parameter entity.
+ *
+ *
+ */
 public enum Role {
     USER(1), ADMIN(2), UNKNOWN(3);
 

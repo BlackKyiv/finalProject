@@ -8,6 +8,11 @@ import ua.training.myWeb.services.DatabaseService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Update edition command.
+ *
+ *
+ */
 public class UpdateEditionCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(UpdateEditionCommand.class);

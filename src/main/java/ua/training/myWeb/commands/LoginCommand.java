@@ -15,6 +15,11 @@ import javax.servlet.http.HttpSession;
 import java.util.concurrent.ConcurrentHashMap;
 
 
+/**
+ * Login command.
+ *
+ *
+ */
 public class LoginCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(LoginCommand.class);

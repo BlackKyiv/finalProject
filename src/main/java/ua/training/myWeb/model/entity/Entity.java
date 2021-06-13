@@ -2,7 +2,11 @@ package ua.training.myWeb.model.entity;
 
 import java.io.Serializable;
 
-
+/**
+ * Root of all entities which have identifier field.
+ *
+ *
+ */
 public abstract class Entity implements Serializable {
 
     private Long id;

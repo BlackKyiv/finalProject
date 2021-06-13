@@ -9,6 +9,11 @@ import ua.training.myWeb.services.DatabaseService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Replenish command.
+ *
+ *
+ */
 public class ReplenishCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(ReplenishCommand.class);

@@ -8,6 +8,11 @@ import ua.training.myWeb.services.DatabaseService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Cancel subscription command.
+ *
+ *
+ */
 public class CancelSubscriptionCommand extends Command {
     private static final Logger logger = LogManager.getLogger(CancelSubscriptionCommand.class);
 

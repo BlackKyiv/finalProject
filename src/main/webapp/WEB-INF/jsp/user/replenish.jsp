@@ -16,13 +16,14 @@
         </div>
 
         <div class="form-group">
-            <input type="number" name="replenish" id="form1Example1" class="form-control" placeholder="<fmt:message key="text.placeholder.inputSum"/>" min="0" required/>
+            <input type="number" name="replenish" id="form1Example1" class="form-control"
+                   placeholder="<fmt:message key="text.placeholder.inputSum"/>" min="0" required/>
         </div>
         <div class="text-center">
             <input type="submit" value="<fmt:message key="text.button.replenish"/>" id="submit" class="btn btn-primary">
         </div>
 
-        <input type="hidden" name="command" value="replenish" >
+        <input type="hidden" name="command" value="replenish">
     </form>
 </div>
 

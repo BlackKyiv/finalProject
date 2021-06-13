@@ -8,6 +8,11 @@ import ua.training.myWeb.services.PageFillerService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * List of users command.
+ *
+ *
+ */
 public class UsersCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(UsersCommand.class);

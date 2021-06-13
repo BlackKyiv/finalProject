@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
+/**
+ * Mapper for theme
+ */
 public class ThemeMapper implements ObjectMapper<Theme> {
 
     @Override

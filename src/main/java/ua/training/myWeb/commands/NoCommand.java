@@ -8,6 +8,12 @@ import ua.training.myWeb.Servlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+/**
+ * Error command.
+ *
+ *
+ */
 public class NoCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(Servlet.class);

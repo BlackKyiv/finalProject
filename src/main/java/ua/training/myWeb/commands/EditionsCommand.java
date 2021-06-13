@@ -8,6 +8,11 @@ import ua.training.myWeb.services.PageFillerService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * List of editions command.
+ *
+ *
+ */
 public class EditionsCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(EditionsCommand.class);

@@ -2,6 +2,11 @@ package ua.training.myWeb.model.entity;
 
 import ua.training.myWeb.model.entity.enums.EditionStatus;
 
+/**
+ * Edition entity.
+ *
+ *
+ */
 public class Edition extends Entity {
     private String name;
     private Double price;

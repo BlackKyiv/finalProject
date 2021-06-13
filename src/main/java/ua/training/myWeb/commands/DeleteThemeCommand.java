@@ -7,6 +7,11 @@ import ua.training.myWeb.services.DatabaseService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Delete theme command.
+ *
+ *
+ */
 public class DeleteThemeCommand extends Command {
 
     private static final Logger logger = LogManager.getLogger(DeleteThemeCommand.class);

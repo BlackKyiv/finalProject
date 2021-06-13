@@ -17,8 +17,5 @@
 <br>
 <h3 class="text-dark" align="center">${sessionScope.errorMessage}</h3>
 <br>
-
-
-
 </body>
 </html>
